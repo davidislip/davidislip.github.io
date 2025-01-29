@@ -12,7 +12,7 @@
             Toronto, ON <br>
     </p>
     <p>
-            <b>Interests</b>: Quantitative Risk Modeling, Mathematical Optimization, and <br> Machine Learning
+            <b>Interests</b>: Quantitative Risk Modeling, Mathematical Optimization, and <br> Machine Learning for Financial Applications
     </p>
     <div style="clear: both"></div>      
   </div>
@@ -20,11 +20,11 @@
 ~~~
 
 # About
+I am a Ph.D. candidate in the Department of Mechanical and Industrial Engineering at the University of Toronto, specializing in Operations Research for Financial Applications under the supervision of Professor Roy H. Kwon. My research focuses on developing innovative solution methods for financial optimization problems by leveraging the structural properties of specific optimization problem classes and incorporating tailored machine learning approaches. 
 
+I have been fortunate to collaborate with wonderful professionals in industry throughout my graduate studies. I began my Ph.D. while working as a Quant at Canada Guaranty Mortgage Insurance Company (2018–2021). In the summer of 2022, I interned with the Macro Risk team at Balyasny Asset Management. Most recently, at the final stage of my Ph.D., I have been working at Tao Solutions (Sept. 2025) to develop a large-scale optimization solver.
 
-
-
-
+_I thoroughly enjoy applying optimization theory to real-world problems and, conversely, allowing practical challenges to inspire new theories._
 
 # How to use Franklin
 
