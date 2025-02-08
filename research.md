@@ -17,12 +17,12 @@ tags = ["syntax", "code"]
 
 -\biblabel{gaskin23}{Gaskin et al. (2023)} **Gaskin**, **Kalim**, **Wallace**, **Islip**, **Kwon**, and **Liew**, [Portfolio Optimization Techniques for Cryptocurrencies](https://doi.org/10.3905/joi.2023.1.256), *The Journal of Investing*, **32**(3), 50–65, 2023.
 
-- \biblabel{islip20}{Islip et al. (2020)} **Islip**, **Wei**, and **Kwon**, [Managing construction risk with weather derivatives](https://doi.org/10.1080/0013791X.2020.1733721), *The Engineering Economist*, **66**(2), 150–184, 2020.
+-\biblabel{islip20}{Islip et al. (2020)} **Islip**, **Wei**, and **Kwon**, [Managing construction risk with weather derivatives](https://doi.org/10.1080/0013791X.2020.1733721), *The Engineering Economist*, **66**(2), 150–184, 2020.
 
 
-### In progress
+### Submitted
 
-- \biblabel{grunnesjo25}{Grunnesjö et al. (2025)} **Grunnesjö**, **Islip**, **Li**, **Lu**, and **Kwon**, A Regime-Switching Decision Support System for Dynamic Portfolio Optimization, *Annals of Operations Research* (submitted), 2025.
+-\biblabel{grunnesjo25}{Grunnesjö et al. (2025)} **Grunnesjö**, **Islip**, **Li**, **Lu**, and **Kwon**, A Regime-Switching Decision Support System for Dynamic Portfolio Optimization, *Annals of Operations Research* (submitted), 2025.
 
 -\biblabel{islip25b}{Islip et al. (2025)} **Islip**, **Kwon**, **Bae**, and **Kim**, Contextual Scenario Generation for Two-Stage Stochastic Programming, *Computational Optimization and Applications* (submitted), 2025.
 
