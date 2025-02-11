@@ -12,7 +12,7 @@ tags = ["syntax", "code"]
 
 ### Published 
 
--\biblabel{islip25a}{Islip & Kwon (2025)} **Islip** and **Kwon**, Two-Stage Stochastic Red-Blue Set Covering: A Decomposition Approach, *Global Optimization* (in press), 2025.
+-\biblabel{islip25a}{Islip & Kwon (2025)} **Islip** and **Kwon**, Two-Stage Stochastic Red-Blue Set Covering: A Decomposition Approach, *Journal of Global Optimization* (in press), 2025.
 
 -\biblabel{islip24}{Islip & Kwon (2024)} **Islip** and **Kwon**, [Integration of Support Vector Machines and Mean-Variance Optimization for Capital Allocation](https://doi.org/10.1016/j.ejor.2024.11.022), *European Journal of Operational Research* **322**(3): 1045-1058, 2024.
 
