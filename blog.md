@@ -8,7 +8,7 @@ The following posts contain some lessons I have gathered along the way.
 
 Understanding the distribution of the sample standard deviation can be done using the delta method. By applying the multivariate central limit theorem and a Taylor series expansion, an asymptotic approximation is derived. While this first-order approach works under most conditions, it fails for edge cases like Bernoulli variables with $p = 0.5$, where zero gradients necessitate a second-order expansion, yielding a negative chi-squared distribution instead of a normal one.
 
-<!-- How can we understanding the distribution of the sample standard deviation? One way is to use a technique called the delta method. By applying the multivariate central limit theorem, it's possible to derive an asymptotic approximation of the standard deviation's distribution through a Taylor series expansion. This first-order approach works under typical conditions, but fails in edge cases like Bernoulli random variables with 
+<!-- How can we understand the distribution of the sample standard deviation? One way is to use a technique called the delta method. By applying the multivariate central limit theorem, it's possible to derive an asymptotic approximation of the standard deviation's distribution through a Taylor series expansion. This first-order approach works under typical conditions, but fails in edge cases like Bernoulli random variables with 
 $p=0.5$, where a zero variance forces the use of a second-order expansion. In such scenarios, the resulting distribution is asymptotically negative chi-squared instead of normal. -->
 
 
