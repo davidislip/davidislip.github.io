@@ -5,14 +5,14 @@
 ~~~
 <div class="row">
   <div class="container">
-    <img class="right" src="/assets/website_headshot.jfif", style="width: 180px; height: 180px";>
+    <img class="right" src="/assets/website_headshot.jfif", style="width: 150px; height: 150px";>
     <p>
-    Ph.D. Candidate in Industrial Engineering (Operations Research) <br>
+    Ph.D. in Industrial Engineering (Operations Research) <br>
             University of Toronto<br>
             Toronto, ON <br>
     </p>
     <p>
-            <b>Interests</b>: Quantitative Risk Modeling, Mathematical Optimization, and <br> Machine Learning for Financial Applications
+            <b>Interests</b>: Quantitative Risk Modeling, <br> Mathematical Optimization, and <br> Machine Learning for Financial Applications
     </p>
     <div style="clear: both"></div>      
   </div>

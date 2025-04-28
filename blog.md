@@ -2,8 +2,6 @@
 title = "Blog"
 +++
 
-The following posts contain some lessons I have gathered along the way. 
-
 # Bootstrapping and the Delta Method
 
 Understanding the distribution of the sample standard deviation can be done using the delta method. By applying the multivariate central limit theorem and a Taylor series expansion, an asymptotic approximation is derived. While this first-order approach works under most conditions, it fails for edge cases like Bernoulli variables with $p = 0.5$, where zero gradients necessitate a second-order expansion, yielding a negative chi-squared distribution instead of a normal one.
