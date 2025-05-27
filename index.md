@@ -3,6 +3,7 @@
 
 # David Islip
 ~~~
+<meta name="google-site-verification" content="6N65FHgfF3ORbaIVXO05h-jZpXeWmnsKpVDa9sb1T94" />
 <div class="row">
   <div class="container">
     <img class="right" src="/assets/website_headshot.jfif", style="width: 150px; height: 150px";>
