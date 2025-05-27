@@ -20,7 +20,6 @@
 
 ~~~
 <head>
-<meta name="google-site-verification" content="6N65FHgfF3ORbaIVXO05h-jZpXeWmnsKpVDa9sb1T94" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Links</title>
