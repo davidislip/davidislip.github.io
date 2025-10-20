@@ -5,7 +5,7 @@
 ~~~
 <div class="row">
   <div class="container">
-    <img class="right" src="/assets/website_headshot.jfif", style="width: 150px; height: 150px";>
+    <img class="right" src="/assets/headshot.jpg", style="width: 150px; height: 180px";>
     <p>
     Ph.D. in Industrial Engineering (Operations Research) <br>
             University of Toronto<br>
@@ -61,8 +61,6 @@
 ~~~
 
 # About
-I am a Ph.D. graduate in the Department of Mechanical and Industrial Engineering at the University of Toronto, specializing in Operations Research for Financial Applications under the supervision of Professor Roy H. Kwon. My research focuses on solving financial optimization problems by leveraging the structural properties of specific optimization problem classes and incorporating tailored machine-learning approaches. 
+I am a Ph.D. graduate from the Department of Mechanical and Industrial Engineering at the University of Toronto, specializing in Operations Research for Financial Applications under the supervision of Professor Roy H. Kwon. My research focuses on solving financial optimization problems by leveraging the structural properties of specific optimization problem classes and incorporating tailored machine-learning approaches.
 
-I have been fortunate to collaborate with industry professionals throughout my graduate studies. I began my Ph.D. as a Quant at Canada Guaranty Mortgage Insurance Company (2018–2021). In the summer of 2022, I interned with the Macro Risk team at Balyasny Asset Management (BAM). At the final stage of my Ph.D., I worked at Tao Solutions (September 2024) to develop a large-scale optimization solver. I have been at BAM since June 2025.
-
-
+I have been fortunate to collaborate with industry professionals throughout my graduate studies. From 2018 to 2021, I worked as a Quant at Canada Guaranty Mortgage Insurance Company. In the summer of 2022, I joined the Macro Risk team at Balyasny Asset Management as a Ph.D. intern, and after completing my doctorate, I returned to the team full time. In the final stage of my Ph.D., I also worked with Tao Solutions (September 2024), where I developed a large-scale optimization solver.
