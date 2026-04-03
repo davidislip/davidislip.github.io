@@ -9,3 +9,23 @@
     border-bottom: 1px solid #c0c0c0;
     padding-bottom: 0.7rem;
 }
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    a {
+        text-decoration: none;
+        color: #0A3b76;
+        font-size: 24px;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: #2098d1;
+            text-decoration: none;
+        }
+    }
+}

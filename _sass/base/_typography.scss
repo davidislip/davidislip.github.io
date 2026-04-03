@@ -5,19 +5,21 @@
 
 h1, h2, h3, h4, h5, h6 {
   margin-bottom: .5rem;
-  font-weight: bold;
+  font-weight: 600;
   line-height: 1.25;
-  color: #313131;
+  color: #252525;
   text-rendering: optimizeLegibility;
 }
 
 h1 {
   font-size: 2rem;
+  letter-spacing: -0.01em;
 }
 
 h2 {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   font-size: 1.5rem;
+  letter-spacing: -0.01em;
 }
 
 h3 {

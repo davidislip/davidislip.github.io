@@ -19,44 +19,20 @@
 ~~~
 
 ~~~
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Links</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <style>
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .social-icons a {
-            text-decoration: none;
-            color: #0A3b76;
-            font-size: 24px;
-            transition: color 0.3s ease;
-        }
-        .social-icons a:hover {
-            color: #0073b1; /* Change this for different hover colors */
-        }
-    </style>
-</head>
-      <div class="social-icons">
-        <a href="https://github.com/davidislip" target="_blank">
-            <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/david-ryan-islip-1889798a/" target="_blank">
-            <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://scholar.google.com/citations?user=1OSeaukAAAAJ&hl=en" target="_blank">
-            <i class="fas fa-graduation-cap"></i>
-        </a>
-        <a href="https://x.com/DaveIslip" target="_blank">
-            <i class="fab fa-x-twitter"></i>
-        </a>
-    </div>
+<div class="social-icons">
+    <a href="https://github.com/davidislip" target="_blank">
+        <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/david-ryan-islip-1889798a/" target="_blank">
+        <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://scholar.google.com/citations?user=1OSeaukAAAAJ&hl=en" target="_blank">
+        <i class="fas fa-graduation-cap"></i>
+    </a>
+    <a href="https://x.com/DaveIslip" target="_blank">
+        <i class="fab fa-x-twitter"></i>
+    </a>
+</div>
 </div>
 ~~~
 
