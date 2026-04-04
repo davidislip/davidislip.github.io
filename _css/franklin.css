@@ -101,6 +101,24 @@ html {
     padding-left: 6%;
     padding-right: 6%;
   }
+
+  /* Compact nav so all 5 items stay on one row at 320 px.
+     Default padding (0.7rem 1.5rem) requires ~530 px; this fits ~320 px. */
+  .nav-main li a {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.75rem;
+    letter-spacing: 0;
+  }
+  .nav-main li.logo a {
+    margin: 0 0.3rem;
+  }
+
+  /* Images fill the content column instead of being capped at ~70% */
+  .franklin-content img,
+  .franklin-content .img-small img {
+    width: 100%;
+    padding-left: 0;
+  }
 }
 
 /* ==================================================================
@@ -279,6 +297,14 @@ body { counter-reset: eqnum; }
 .nonumber .katex-display::after {
   counter-increment: nothing;
   content: "";
+}
+
+/* Prevent wide display equations from overflowing the viewport on mobile.
+   overflow-y: hidden avoids a spurious vertical scrollbar from ascenders/descenders. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25em 0;
 }
 
 /* ==================================================================
