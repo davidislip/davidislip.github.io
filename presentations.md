@@ -2,6 +2,7 @@
 title = "Presentations"
 hascode = true
 rss = "Conference presentations and talks by David Islip on stochastic programming, portfolio optimization, and machine learning in finance."
+description = "Conference presentations and talks by David Islip on stochastic programming, portfolio optimization, and machine learning in finance."
 
 tags = ["syntax", "code", "image"]
 +++

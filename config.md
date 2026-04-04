@@ -20,6 +20,7 @@ generate_rss = true
 website_title = "David Islip Quant"
 website_descr = "David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research."
 website_url   = "https://davidislip.github.io/"
+description   = "David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research."
 +++
 
 <!--

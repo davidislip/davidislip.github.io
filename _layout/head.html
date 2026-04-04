@@ -8,34 +8,24 @@
   {{if hascode}} {{insert head_highlight.html }}   {{end}}
   {{ insert head_mixin.html }}
 
-  {{isdef title}} <title>{{fill title}} — David Islip</title>  {{end}}
+  {{isdef title}}<title>{{fill title}} — David Islip</title>{{end}}
 
-  <!-- Meta description -->
-  {{isdef rss}}
-  <meta name="description" content="{{fill rss}}">
-  {{isnotdef rss}}
-  <meta name="description" content="David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research.">
-  {{end}}
+  <!-- Meta description (page-specific via @def description, falls back to global) -->
+  <meta name="description" content="{{fill description}}">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="David Islip Quant">
-  {{isdef title}}<meta property="og:title" content="{{fill title}} — David Islip">{{end}}
-  {{isdef rss}}
-  <meta property="og:description" content="{{fill rss}}">
-  {{isnotdef rss}}
-  <meta property="og:description" content="David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research.">
-  {{end}}
+  <meta property="og:description" content="{{fill description}}">
   <meta property="og:url" content="https://davidislip.github.io/">
   <meta property="og:image" content="https://davidislip.github.io/assets/headshot.jpg">
+  {{isdef title}}<meta property="og:title" content="{{fill title}} — David Islip">{{end}}
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:site" content="@DaveIslip">
+  <meta name="twitter:description" content="{{fill description}}">
   {{isdef title}}<meta name="twitter:title" content="{{fill title}} — David Islip">{{end}}
-  {{isdef rss}}
-  <meta name="twitter:description" content="{{fill rss}}">
-  {{end}}
 
   <!-- RSS feed discovery -->
   <link rel="alternate" type="application/rss+xml" title="David Islip Quant" href="https://davidislip.github.io/feed">

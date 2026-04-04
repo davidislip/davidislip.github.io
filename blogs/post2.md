@@ -1,6 +1,7 @@
 +++
 title = "Probability of Constraint Satisfaction and Robust Optimization"
 rss = "An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming."
+description = "An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming."
 +++
 
 # Probability of constraint satisfaction and Robust Optimization
