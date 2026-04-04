@@ -1,5 +1,6 @@
 +++
 title = "Some Facts about Bootstrapping"
+hasmath = true
 rss = "Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations."
 description = "Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations."
 +++

@@ -1,5 +1,6 @@
 +++
 title = "Probability of Constraint Satisfaction and Robust Optimization"
+hasmath = true
 rss = "An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming."
 description = "An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming."
 +++
@@ -29,7 +30,7 @@ $$
 \boldsymbol{\mu}^{\intercal}\bf{x} \geq r_{\text{min}} \ \forall \boldsymbol{\mu} \in \mathcal{U},
 $$
 where $\mathcal{U}$ is an uncertainty set for the mean. 
-A popular uncertainty set is the ellipsoid centered at the estimate $\hat\boldsymbol{\mu}$ with shape parameter  
+A popular uncertainty set is the ellipsoid centered at the estimate $\hat{\boldsymbol{\mu}}$ with shape parameter  
 $$\Theta = \frac{1}{T}\begin{pmatrix}
 \hat{Q}_{11} & 0 & \cdots & 0 \\
 0 & \hat{Q}_{22} & \cdots & 0 \\
@@ -39,15 +40,11 @@ $$\Theta = \frac{1}{T}\begin{pmatrix}
 $$
 and radius $\delta$. In this setting, the robust optimization problem can be written as: 
 $$
-\begin{align*}
-&\begin{align*}
- & \min_{\bf{x}}     & \bf{x}^{\intercal} \hat{\bf{Q}}\ \bf{x}
-\end{align*}\\
-&\begin{align*}
- &\ \mathrm{s.t.}    & \hat{\boldsymbol{\mu}}^T \bf{x} - \delta \|\bf{\Theta}^{1/2} \bf{x}\|_2 &\geq r_{\text{min}} \\
- &                   & \bf{1}^T \bf{x} &= 1
-\end{align*}
-\end{align*}
+\begin{aligned}
+\min_{\bf{x}} \quad & \bf{x}^{\intercal} \hat{\bf{Q}}\ \bf{x} \\
+\mathrm{s.t.} \quad & \hat{\boldsymbol{\mu}}^T \bf{x} - \delta \|\bf{\Theta}^{1/2} \bf{x}\|_2 \geq r_{\text{min}} \\
+                    & \bf{1}^T \bf{x} = 1
+\end{aligned}
 $$
 
 Now let ${\bf x}_{\text{ROB}} \left(\boldsymbol{\hat{\mu}}, \hat{\bf{Q}} \right)$ denote a robust MVO solution obtained using estimates $\boldsymbol{\hat{\mu}}$ and $\hat{\bf{Q}}$ and consider the probability of constraint satisfaction $\mathbb{P}[\mu^{\intercal} {\bf x}_{\text{ROB}} \left(\boldsymbol{\hat{\mu}}, \hat{\bf{Q}} \right) \geq r_{\text{min}}] = ? $. This probability should be higher than the estimated MVO case if the ellipsoid covers a large portion of the support of the distribution of $\hat{\boldsymbol{\mu}}$. However, in practice, we cannot easily evaluate these probabilities. 
