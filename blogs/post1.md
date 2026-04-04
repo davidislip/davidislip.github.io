@@ -1,5 +1,6 @@
 +++
-title = "Post 1"
+title = "Some Facts about Bootstrapping"
+rss = "Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations."
 +++
 # Some Facts about Bootstrapping
 This post documents some facts about bootstrapping that I encountered during my PhD. In particular, this post highlights some asymptotic results relating to

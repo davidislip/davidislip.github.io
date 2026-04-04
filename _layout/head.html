@@ -8,7 +8,57 @@
   {{if hascode}} {{insert head_highlight.html }}   {{end}}
   {{ insert head_mixin.html }}
 
-  {{isdef title}} <title>{{fill title}}</title>  {{end}}
+  {{isdef title}} <title>{{fill title}} — David Islip</title>  {{end}}
+
+  <!-- Meta description -->
+  {{isdef rss}}
+  <meta name="description" content="{{fill rss}}">
+  {{isnotdef rss}}
+  <meta name="description" content="David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research.">
+  {{end}}
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="David Islip Quant">
+  {{isdef title}}<meta property="og:title" content="{{fill title}} — David Islip">{{end}}
+  {{isdef rss}}
+  <meta property="og:description" content="{{fill rss}}">
+  {{isnotdef rss}}
+  <meta property="og:description" content="David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research.">
+  {{end}}
+  <meta property="og:url" content="https://davidislip.github.io/">
+  <meta property="og:image" content="https://davidislip.github.io/assets/headshot.jpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@DaveIslip">
+  {{isdef title}}<meta name="twitter:title" content="{{fill title}} — David Islip">{{end}}
+  {{isdef rss}}
+  <meta name="twitter:description" content="{{fill rss}}">
+  {{end}}
+
+  <!-- RSS feed discovery -->
+  <link rel="alternate" type="application/rss+xml" title="David Islip Quant" href="https://davidislip.github.io/feed">
+
+  <!-- JSON-LD: Person schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "David Islip",
+    "url": "https://davidislip.github.io/",
+    "image": "https://davidislip.github.io/assets/headshot.jpg",
+    "jobTitle": "Quantitative Researcher",
+    "affiliation": "Balyasny Asset Management",
+    "alumniOf": "University of Toronto",
+    "sameAs": [
+      "https://github.com/davidislip",
+      "https://www.linkedin.com/in/david-ryan-islip-1889798a/",
+      "https://scholar.google.com/citations?user=1OSeaukAAAAJ&hl=en",
+      "https://x.com/DaveIslip"
+    ]
+  }
+  </script>
 </head>
 <body>
   {{insert header.html}}

@@ -18,7 +18,7 @@ ignore = ["node_modules/"]
 # RSS (the website_{title, descr, url} must be defined to get RSS)
 generate_rss = true
 website_title = "David Islip Quant"
-website_descr = "David Islip Website"
+website_descr = "David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research."
 website_url   = "https://davidislip.github.io/"
 +++
 
@@ -28,4 +28,4 @@ Add here global latex commands to use throughout your pages.
 \newcommand{\R}{\mathbb R}
 \newcommand{\scal}[1]{\langle #1 \rangle}
 
-keep_path = ["google599763433934e4da.html"]
+keep_path = ["google599763433934e4da.html", "robots.txt", "sitemap.xml"]

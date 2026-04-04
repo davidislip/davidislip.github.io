@@ -1,5 +1,6 @@
 @def title = "Home"
 @def tags = ["syntax", "code"]
+@def rss = "David Islip is a quantitative researcher and Ph.D. graduate from the University of Toronto, specializing in financial optimization, machine learning, and operations research. Currently at Balyasny Asset Management."
 
 # David Islip
 ~~~
