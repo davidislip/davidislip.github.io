@@ -19,6 +19,7 @@
 ~~~
 
 ~~~
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <div class="social-icons">
     <a href="https://github.com/davidislip" target="_blank">
         <i class="fab fa-github"></i>
