@@ -65,25 +65,25 @@ The links below were useful in understanding the delta method and its applicatio
 - [Why does the second-order delta method approximation to the variance of Bernoulli r.v. result in a negative chi-square?](https://tinyurl.com/yz7sae3a)
 - [Elements of Large-Sample Theory](https://tinyurl.com/42wwkbz7)
 - [Standard Deviation Distribution](https://tinyurl.com/f9za5y4u)
-The case of determining an approximation for the distribution of $\boldsymbol{\Sigma}$ is more complex. For simplicity, we consider the case where $\boldsymbol{\Sigma}$ is a scalar denoted by $\sigma$.
-An approach referred to as the delta method can be used to obtain the asymptotic distribution of $\Sigma =  \frac{1}{T}\sum_{i \in [T]} X_i^2 - (\frac{1}{T} \sum_{i \in [T]} X_i)^2$.
+The case of determining an approximation for the distribution of $\boldsymbol{\Sigma}$ is more complex. For simplicity, we consider the case where $\boldsymbol{\Sigma}$ is a scalar denoted by $\sigma^2$.
+An approach referred to as the delta method can be used to obtain the asymptotic distribution of $\sigma^2 =  \frac{1}{T}\sum_{i \in [T]} X_i^2 - (\frac{1}{T} \sum_{i \in [T]} X_i)^2$.
 
-Let $W^{(2)}$ and $W^{(1)}$ denote $\frac{1}{T} \sum_{i \in [T]} X_i^2$ and $\frac{1}{T} \sum_t X_t$ respectively. $W^{(1)}$ and $W^{(2)}$ converge to a joint normal distribution by the multivariate central limit theorem with covariance $\Xi_{W^{(j)}, W^{(k)}} = \mathbb{E}[W^{(j)} W^{(k)}] - \mathbb{E}[W^{(j)}]\mathbb{E}[W^{(k)}]$ and expected value $\boldsymbol{\mu}_{\mathbf{W}}$ i.e $\sqrt{T}(\mathbf{W} - \boldsymbol{\mu}_{\mathbf{W}} ) \overset{d}{\rightarrow} N(\mathbf{0}, \Xi)$.
+Let $W^{(2)}$ and $W^{(1)}$ denote $\frac{1}{T} \sum_{i \in [T]} X_i^2$ and $\frac{1}{T} \sum_{t \in [T]} X_t$ respectively. $W^{(1)}$ and $W^{(2)}$ converge to a joint normal distribution by the multivariate central limit theorem with covariance $\Xi_{W^{(j)}, W^{(k)}} = \mathbb{E}[W^{(j)} W^{(k)}] - \mathbb{E}[W^{(j)}]\mathbb{E}[W^{(k)}]$ and expected value $\boldsymbol{\mu}_{\mathbf{W}}$ i.e $\sqrt{T}(\mathbf{W} - \boldsymbol{\mu}_{\mathbf{W}} ) \overset{d}{\rightarrow} N(\mathbf{0}, \Xi)$.
 
 In general, for any differentiable $g(\mathbf{W})$ one can write the following first-order Taylor expansion $g({\mathbf{W}}) \approx {g(\boldsymbol{\mu}_{\mathbf{W}}) + } \nabla g(\boldsymbol{\mu}_{\mathbf{W}})({\mathbf{W}} - \boldsymbol{\mu}_{\mathbf{W}})$.
-One can approximate the covariance of $g(\mathbf{W})$ by $\mathbb{V}[g({\mathbf{W}})] \approx \nabla g({\mathbf{W}})^{\intercal} {\mathbf \Xi} \nabla g({\mathbf{W}})$, and as such $\sqrt{T}(g({\mathbf{W}}) - g({\boldsymbol{\mu}_{\mathbf{W}}}) )\overset{d}{\rightarrow} N(0,\nabla g({\mathbf{W}})^{\intercal} {\mathbf \Xi} \nabla g({\mathbf{W}}))$.
+One can approximate the covariance of $g(\mathbf{W})$ by $\mathbb{V}[g({\mathbf{W}})] \approx \nabla g(\boldsymbol{\mu}_{\mathbf{W}})^{\intercal} {\mathbf{\Xi}} \nabla g(\boldsymbol{\mu}_{\mathbf{W}})$, and as such $\sqrt{T}(g({\mathbf{W}}) - g({\boldsymbol{\mu}_{\mathbf{W}}}) )\overset{d}{\rightarrow} N(0,\nabla g(\boldsymbol{\mu}_{\mathbf{W}})^{\intercal} {\mathbf{\Xi}} \nabla g(\boldsymbol{\mu}_{\mathbf{W}}))$.
 
 One can set $g(W_1,W_2) = W^{(2)} - (W^{(1)})^2$ and use the first-order delta method as described above to obtain asymptotic convergence condition.
 The first-order delta method does not always work. Convergence to normality does not hold for Bernoulli variables with $p = 0.5$ because the variance of $g$ ends up being zero.
 
-To circumvent this, the second-order Taylor approximation must be used. In the case of Bernoulli random variables $g$ can be expressed as a function of a single random parameter: $$\hat{p} := \frac{1}{T} \sum_t X_t,$$ since $\frac{1}{T} \sum_t X_t = \frac{1}{T} \sum_t X_t^2$. In this case,
+To circumvent this, the second-order Taylor approximation must be used. In the case of Bernoulli random variables $g$ can be expressed as a function of a single random parameter: $$\hat{p} := \frac{1}{T} \sum_{t \in [T]} X_t,$$ since $\frac{1}{T} \sum_{t \in [T]} X_t = \frac{1}{T} \sum_{t \in [T]} X_t^2$. In this case,
 $$\begin{align*}
-g(\hat{p}) &= \frac{1}{T} \sum_t X_t^2 - \left(\frac{1}{T} \sum_t X_t\right)^2\\
+g(\hat{p}) &= \frac{1}{T} \sum_{t \in [T]} X_t^2 - \left(\frac{1}{T} \sum_{t \in [T]} X_t\right)^2\\
 &= \hat{p}(1-\hat{p}).
 \end{align*}$$
-If the mean is $p=1/2$, then taking the second-order taylor expansion around the mean implies $\hat{p}(1-\hat{p}) = 1/4 + 0*(\hat{p}-0.5) + 1/2 (-2) (\hat{p} - 1/2)^2$. It is then true that $\hat{p}(1-\hat{p})$ is asymptotically negative $\chi^2$ and is not normal because $\hat{p} = \frac{1}{T} \sum_t X_t$ is asymptotically normal by the central limit theorem and $\hat{p}(1-\hat{p})$ is a constant minus an asymptotically normal variable squared (as shown in the above Taylor series. In the case that the first-order delta method is applicable and the first-order Taylor series introduces uncertainty in $g$, it follows:
+If the mean is $p=1/2$, then taking the second-order taylor expansion around the mean implies $\hat{p}(1-\hat{p}) = 1/4 + 0*(\hat{p}-0.5) + 1/2 (-2) (\hat{p} - 1/2)^2$. It is then true that $\hat{p}(1-\hat{p})$ is asymptotically negative $\chi^2$ and is not normal because $\hat{p} = \frac{1}{T} \sum_{t \in [T]} X_t$ is asymptotically normal by the central limit theorem and $\hat{p}(1-\hat{p})$ is a constant minus an asymptotically normal variable squared (as shown in the above Taylor series. In the case that the first-order delta method is applicable and the first-order Taylor series introduces uncertainty in $g$, it follows:
 $$
-    \frac{1}{T}\sum X_i^2 - (\frac{1}{T} \sum_t X_t)^2 \overset{d}{\rightarrow} N {\big(}\sigma^2, \frac{1}{\sqrt{T}}\sqrt{\text{CM}_4(X) - \sigma^4 + O(T^{-2})}{\big)},
+    \frac{1}{T}\sum_{i \in [T]} X_i^2 - \left(\frac{1}{T} \sum_{t \in [T]} X_t\right)^2 \overset{d}{\rightarrow} N {\big(}\sigma^2, \frac{1}{\sqrt{T}}\sqrt{\text{CM}_4(X) - \sigma^4 + O(T^{-2})}{\big)},
 $$
 where $\text{CM}_4(X)$ denotes the 4th-order central moment of $X$.
 ## Google Colab Notebook
