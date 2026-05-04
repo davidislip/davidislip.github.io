@@ -20,10 +20,10 @@ tags = ["syntax", "code"]
 
 -\biblabel{islip20}{Islip et al. (2020)} **Islip**, **Wei**, and **Kwon**, [Managing construction risk with weather derivatives](https://doi.org/10.1080/0013791X.2020.1733721), *The Engineering Economist*, **66**(2), 150–184, 2020.
 
+-\biblabel{grunnesjo26}{Grunnesjö et al. (2026)} **Grunnesjö**, **Islip**, **Li**, **Lu**, and **Kwon**, [A Regime-Switching Decision Support System for Dynamic Portfolio Optimization](https://doi.org/10.1007/s10479-025-06990-1), *Annals of Operations Research*, 2026.
+
 
 ### Submitted
-
--\biblabel{grunnesjo25}{Grunnesjö et al. (2025)} **Grunnesjö**, **Islip**, **Li**, **Lu**, and **Kwon**, A Regime-Switching Decision Support System for Dynamic Portfolio Optimization, *Annals of Operations Research* (major revision), 2025.
 
 -\biblabel{islip25b}{Islip et al. (2025)} **Islip**, **Kwon**, **Bae**, and **Kim**, [Contextual Scenario Generation for Two-Stage Stochastic Programming](https://www.arxiv.org/abs/2502.05349), *Computational Optimization and Applications* (major revision), 2025.
 
