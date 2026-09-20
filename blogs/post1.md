@@ -17,24 +17,28 @@ Consider the setting where we sample $T$ observations and create $B$ samples of 
 ## Part 1: Normality
 ### Mean Absolute Deviation and Standard Deviation
 \citet{Geary} proved the following:
-If $X \sim N(\mu, \sigma)$ then $\mathbb{E}[|X - \mu|] = \sqrt{\frac{2}{\pi}} \sigma$
+If $X \sim N(\mu, \sigma^2)$ then $\mathbb{E}[|X - \mu|] = \sqrt{\frac{2}{\pi}} \sigma$
+
+Throughout this post $N(\cdot, \cdot)$ takes the **mean** as its first argument and the **variance** (or covariance matrix, in the multivariate case) as its second.
+
 \biblabel{Geary}{Geary, R. C. } **Geary**, [The Ratio of the Mean Deviation to the Standard Deviation as a Test of Normality.](https://www.jstor.org/stable/2332693), *Biometrika*, **27**(3), 310–32, 1935.
 ### Central limit theorem
-The central limit theorem states that if $\{X_i \}_{i \in [T]}$ are $T$ samples drawn independently and identically distributed from a distribution with mean $\mu$ and variance $\sigma^2$, then $Z = \lim_{T \rightarrow \infty} \sqrt{T} (\frac{1}{T}\sum_{t \in [T]}{X_t} - \mu)/{\sigma}$ follows a standard normal distribution.
+The central limit theorem states that if $\{X_i \}_{i \in [T]}$ are $T$ samples drawn independently and identically distributed from a distribution with mean $\mu$ and variance $\sigma^2$, then $\sqrt{T} (\frac{1}{T}\sum_{t \in [T]}{X_t} - \mu)/{\sigma} \overset{d}{\rightarrow} Z$, where $Z$ follows a standard normal distribution.
 The sample estimate of the mean for batch $b \in [B]$ is given by $ \bar{\mu}^{(b)}
 := \frac{1}{T} \sum_{t \in [T]} X_t^{(b)}$, therefore, for large $T$:
 $$
-    \frac{1}{T} \sum_{t \in [T]} X_t^{(b)} \overset{d}{\rightarrow} N(\mu, \frac{\sigma}{\sqrt{T}})
+    \frac{1}{T} \sum_{t \in [T]} X_t^{(b)} \overset{\cdot}{\sim} N(\mu, \frac{\sigma^2}{T})
 $$
-In our setting, the distribution is the empirical distribution defined by the sample $S$, implying that $\mu$ and $\sigma$ are given by
+where $\overset{\cdot}{\sim}$ reads "is approximately distributed as" — the exact statement is the $\sqrt{T}$-scaled one, $\sqrt{T}(\bar{\mu}^{(b)} - \mu) \overset{d}{\rightarrow} N(0, \sigma^2)$.
+In our setting, the distribution is the empirical distribution defined by the sample $S$, implying that $\mu$ and $\sigma^2$ are given by
 $$
 \mu = \mathbb{E}_S[X] = \frac{1}{T}\sum_{x \in S} x
 $$
 and
 $$
-\sigma = \mathbb{E}_S[(X - \mu)^2] = \frac{1}{T}\sum_{x \in S} (x - \mu)^2
+\sigma^2 = \mathbb{E}_S[(X - \mu)^2] = \frac{1}{T}\sum_{x \in S} (x - \mu)^2
 $$
-Therefore $\bar{\mu}^{(b)} = \frac{1}{T} \sum_{t \in [T]} X^{(b)}_t$ can be thought of as a sample from $N(\mu, \frac{\sigma}{\sqrt{T}})$
+Therefore $\bar{\mu}^{(b)} = \frac{1}{T} \sum_{t \in [T]} X^{(b)}_t$ can be thought of as a sample from $N(\mu, \frac{\sigma^2}{T})$, i.e. with standard error $\sigma/\sqrt{T}$.
 ## Part 2: Quantile of Absolute Deviations
 In the work by \citet{HoSunXin2015}, the optimal portfolio solves:
 $$
@@ -66,12 +70,16 @@ The links below were useful in understanding the delta method and its applicatio
 - [Elements of Large-Sample Theory](https://tinyurl.com/42wwkbz7)
 - [Standard Deviation Distribution](https://tinyurl.com/f9za5y4u)
 The case of determining an approximation for the distribution of $\boldsymbol{\Sigma}$ is more complex. For simplicity, we consider the case where $\boldsymbol{\Sigma}$ is a scalar denoted by $\sigma^2$.
-An approach referred to as the delta method can be used to obtain the asymptotic distribution of $\sigma^2 =  \frac{1}{T}\sum_{i \in [T]} X_i^2 - (\frac{1}{T} \sum_{i \in [T]} X_i)^2$.
+An approach referred to as the delta method can be used to obtain the asymptotic distribution of the estimator $\hat{\sigma}^2 :=  \frac{1}{T}\sum_{i \in [T]} X_i^2 - (\frac{1}{T} \sum_{i \in [T]} X_i)^2$.
 
-Let $W^{(2)}$ and $W^{(1)}$ denote $\frac{1}{T} \sum_{i \in [T]} X_i^2$ and $\frac{1}{T} \sum_{t \in [T]} X_t$ respectively. $W^{(1)}$ and $W^{(2)}$ converge to a joint normal distribution by the multivariate central limit theorem with covariance $\Xi_{W^{(j)}, W^{(k)}} = \mathbb{E}[W^{(j)} W^{(k)}] - \mathbb{E}[W^{(j)}]\mathbb{E}[W^{(k)}]$ and expected value $\boldsymbol{\mu}_{\mathbf{W}}$ i.e $\sqrt{T}(\mathbf{W} - \boldsymbol{\mu}_{\mathbf{W}} ) \overset{d}{\rightarrow} N(\mathbf{0}, \Xi)$.
+Let $\mathbf{V}_i := (X_i, X_i^2)^{\intercal}$ be the per-observation vector and let $\mathbf{W} := \frac{1}{T}\sum_{i \in [T]} \mathbf{V}_i$, so that $W^{(1)} = \frac{1}{T} \sum_{t \in [T]} X_t$ and $W^{(2)} = \frac{1}{T} \sum_{i \in [T]} X_i^2$. Write $\boldsymbol{\mu}_{\mathbf{W}} := \mathbb{E}[\mathbf{V}]$, and let $\Xi$ be the covariance of a *single* observation,
+$$
+\Xi_{jk} = \mathbb{E}[V^{(j)} V^{(k)}] - \mathbb{E}[V^{(j)}]\mathbb{E}[V^{(k)}].
+$$
+The multivariate central limit theorem then gives $\sqrt{T}(\mathbf{W} - \boldsymbol{\mu}_{\mathbf{W}} ) \overset{d}{\rightarrow} N(\mathbf{0}, \Xi)$. Note that $\Xi$ must be the per-observation covariance, not $\mathbb{V}[\mathbf{W}]$ — the two differ by a factor of $T$.
 
 In general, for any differentiable $g(\mathbf{W})$ one can write the following first-order Taylor expansion $g({\mathbf{W}}) \approx {g(\boldsymbol{\mu}_{\mathbf{W}}) + } \nabla g(\boldsymbol{\mu}_{\mathbf{W}})({\mathbf{W}} - \boldsymbol{\mu}_{\mathbf{W}})$.
-One can approximate the covariance of $g(\mathbf{W})$ by $\mathbb{V}[g({\mathbf{W}})] \approx \nabla g(\boldsymbol{\mu}_{\mathbf{W}})^{\intercal} {\mathbf{\Xi}} \nabla g(\boldsymbol{\mu}_{\mathbf{W}})$, and as such $\sqrt{T}(g({\mathbf{W}}) - g({\boldsymbol{\mu}_{\mathbf{W}}}) )\overset{d}{\rightarrow} N(0,\nabla g(\boldsymbol{\mu}_{\mathbf{W}})^{\intercal} {\mathbf{\Xi}} \nabla g(\boldsymbol{\mu}_{\mathbf{W}}))$.
+One can approximate the asymptotic variance of $g(\mathbf{W})$ by $\nabla g(\boldsymbol{\mu}_{\mathbf{W}})^{\intercal} {\mathbf{\Xi}} \nabla g(\boldsymbol{\mu}_{\mathbf{W}})$ — so that $\mathbb{V}[g({\mathbf{W}})] \approx \frac{1}{T} \nabla g(\boldsymbol{\mu}_{\mathbf{W}})^{\intercal} {\mathbf{\Xi}} \nabla g(\boldsymbol{\mu}_{\mathbf{W}})$ — and as such $\sqrt{T}(g({\mathbf{W}}) - g({\boldsymbol{\mu}_{\mathbf{W}}}) )\overset{d}{\rightarrow} N(0,\nabla g(\boldsymbol{\mu}_{\mathbf{W}})^{\intercal} {\mathbf{\Xi}} \nabla g(\boldsymbol{\mu}_{\mathbf{W}}))$.
 
 One can set $g(W_1,W_2) = W^{(2)} - (W^{(1)})^2$ and use the first-order delta method as described above to obtain asymptotic convergence condition.
 The first-order delta method does not always work. Convergence to normality does not hold for Bernoulli variables with $p = 0.5$ because the variance of $g$ ends up being zero.
@@ -83,9 +91,16 @@ g(\hat{p}) &= \frac{1}{T} \sum_{t \in [T]} X_t^2 - \left(\frac{1}{T} \sum_{t \in
 \end{align*}$$
 If the mean is $p=1/2$, then taking the second-order taylor expansion around the mean implies $\hat{p}(1-\hat{p}) = 1/4 + 0*(\hat{p}-0.5) + 1/2 (-2) (\hat{p} - 1/2)^2$. It is then true that $\hat{p}(1-\hat{p})$ is asymptotically negative $\chi^2$ and is not normal because $\hat{p} = \frac{1}{T} \sum_{t \in [T]} X_t$ is asymptotically normal by the central limit theorem and $\hat{p}(1-\hat{p})$ is a constant minus an asymptotically normal variable squared (as shown in the above Taylor series. In the case that the first-order delta method is applicable and the first-order Taylor series introduces uncertainty in $g$, it follows:
 $$
-    \frac{1}{T}\sum_{i \in [T]} X_i^2 - \left(\frac{1}{T} \sum_{t \in [T]} X_t\right)^2 \overset{d}{\rightarrow} N {\big(}\sigma^2, \frac{1}{\sqrt{T}}\sqrt{\text{CM}_4(X) - \sigma^4 + O(T^{-2})}{\big)},
+    \sqrt{T}{\big(}\hat{\sigma}^2 - \sigma^2{\big)} \overset{d}{\rightarrow} N {\big(}0, \text{CM}_4(X) - \sigma^4{\big)},
 $$
-where $\text{CM}_4(X)$ denotes the 4th-order central moment of $X$.
+where $\text{CM}_4(X)$ denotes the 4th-order central moment of $X$; equivalently, for large $T$, $\hat{\sigma}^2 \overset{\cdot}{\sim} N {\big(}\sigma^2, \frac{\text{CM}_4(X) - \sigma^4}{T}{\big)}$.
+
+### From the variance to the standard deviation
+Part 3 is really after the distribution of $\hat{\sigma}$, not $\hat{\sigma}^2$. One more application of the delta method, with $h(v) = \sqrt{v}$ and $h'(\sigma^2) = \frac{1}{2\sigma}$, gives
+$$
+    \sqrt{T}{\big(}\hat{\sigma} - \sigma{\big)} \overset{d}{\rightarrow} N {\Big(}0, \frac{\text{CM}_4(X) - \sigma^4}{4\sigma^2}{\Big)}.
+$$
+This is the result the bootstrapped quantiles of Part 2 are implicitly relying on.
 ## Google Colab Notebook
 The notebook located [here](https://drive.google.com/file/d/1EQ1f5KXrCXojDyLLVKmG7hgUyIcv7xT6/view?usp=sharing) demonstrates the facts highlighted above. 
 

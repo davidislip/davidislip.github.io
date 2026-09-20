@@ -7,7 +7,7 @@
 ~~~
 <div class="row">
   <div class="container">
-    <img class="right" src="/assets/headshot.jpg", style="width: 150px; height: 180px";>
+    <img class="right" src="/assets/headshot.jpg" alt="David Islip" width="600" height="701" style="width: 150px; height: auto;">
     <p>
     Ph.D. in Industrial Engineering (Operations Research) <br>
             University of Toronto<br>

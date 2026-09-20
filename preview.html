@@ -1,4 +1,19 @@
 <!doctype html>
+<!--
+  LOCAL STYLE SPECIMEN — not part of the built site.
+  Listed in config.md `ignore`, so Franklin does not publish it. Open it directly
+  from disk (paths are relative) to check the stylesheets against elements the real
+  pages do not exercise: blockquote, pre/code, hr, tables, footer.
+
+  IMPORTANT — this file must mirror the production cascade or it is worse than useless:
+    * franklin.css loads FIRST, celeste.min.css SECOND (same order as _layout/head_mixin.html)
+    * content is wrapped in <div class="franklin-content">, as Franklin wraps every page
+  franklin.css's `.franklin-content h1` (0,1,1) beats celeste's bare `h1` (0,0,1), so
+  without both of the above the specimen shows a 34/25.5/21.25px heading scale the live
+  site does not have (it renders 24/22/20px).
+
+  Nav links are intentionally "#". Keep the publication entries in sync with research.md.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +21,7 @@
   <title>Preview — David Islip</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic|Source+Code+Pro:400,700">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="_css/franklin.css">
   <link rel="stylesheet" href="_css/celeste.min.css">
 </head>
 <body>
@@ -22,12 +38,12 @@
 </nav>
 </header>
 
-<div class="container">
+<div class="franklin-content">
 
   <!-- Landing page content -->
   <div class="row">
     <div class="container">
-      <img class="right" src="_assets/headshot.jpg" style="width: 150px; height: 180px;">
+      <img class="right" src="_assets/headshot.jpg" alt="David Islip" width="600" height="701" style="width: 150px; height: auto;">
       <p>
         Ph.D. in Industrial Engineering (Operations Research) <br>
         University of Toronto<br>
@@ -57,10 +73,10 @@
   <h1>Research</h1>
 
   <h2>Published</h2>
-  <p><strong>Islip, D.</strong>, Kwon, R. H. (2024). <a href="#">Support Vector Machine-based Portfolio Selection</a>. <em>Journal of Financial Econometrics</em>, 22(1), 1–35.</p>
+  <p><strong>Islip</strong> and <strong>Kwon</strong>, <a href="#">Integration of Support Vector Machines and Mean-Variance Optimization for Capital Allocation</a>, <em>European Journal of Operational Research</em>, <strong>322</strong>(3), 1045–1058, 2024.</p>
 
-  <h2>Working Papers</h2>
-  <p><strong>Islip, D.</strong>, Kwon, R. H. (2024). <a href="#">Robust Optimization with Probability Constraints</a>. <em>Operations Research</em>.</p>
+  <h2>Submitted</h2>
+  <p><strong>Islip</strong>, <strong>Kwon</strong>, <strong>Bae</strong>, and <strong>Kim</strong>, <a href="#">Contextual Scenario Generation for Two-Stage Stochastic Programming</a>, <em>Computational Optimization and Applications</em> (major revision), 2025.</p>
 
   <hr>
 
@@ -78,6 +94,16 @@
   <pre><code>function portfolio_return(w, μ)
     return dot(w, μ)
 end</code></pre>
+
+  <h2>Table</h2>
+  <table>
+    <thead><tr><th>Paper</th><th>Venue</th><th>Year</th></tr></thead>
+    <tbody>
+      <tr><td>SVM + MVO for capital allocation</td><td>EJOR</td><td>2024</td></tr>
+      <tr><td>Two-stage stochastic red-blue set covering</td><td>JOGO</td><td>2025</td></tr>
+      <tr><td>Cross-validated feature selection</td><td>JOTA</td><td>2026</td></tr>
+    </tbody>
+  </table>
 
   <blockquote>
     <p>A well-constructed portfolio is one that balances risk and return in a principled way.</p>

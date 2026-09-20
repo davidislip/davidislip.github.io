@@ -4,11 +4,20 @@
   */
 
 /* Underline Reveal (from hover.css) */
+//
+// Two changes from the stock hover.css recipe, both deliberate:
+//
+//  1. `overflow: hidden` is GONE. It was what hid the un-revealed bar, but it
+//     sits on the <li> and therefore clipped the browser's focus ring on the
+//     <a> inside — keyboard focus in the nav was invisible. The bar is now
+//     hidden with opacity instead, which clips nothing.
+//  2. `:focus` is on the <li>, which is not focusable, so it never fired.
+//     Replaced with `:focus-within`, which does fire when the inner <a> is
+//     focused.
 .hvr-underline-reveal {
   @include hacks();
 
   position: relative;
-  overflow: hidden;
 
   &:before {
     content: "";
@@ -19,16 +28,19 @@
     bottom: 0;
     background: $nav-link-underline-color;
     height: 2px;
+    opacity: 0;
 
     @include prefix(transform, translateY(4px));
-    @include prefix(transition-property, transform);
+    -webkit-transition-property: transform, opacity;
+    transition-property: transform, opacity;
     @include prefix(transition-duration, 0.2s);
     @include prefix(transition-timing-function, ease-out);
   }
 
   &:hover:before,
-  &:focus:before,
+  &:focus-within:before,
   &:active:before {
+    opacity: 1;
     @include prefix(transform, translateY(0));
   }
 }
@@ -62,9 +74,29 @@
     @include prefix(animation-duration, 0.5s);
   }
 
-  &:hover:before, 
-  &:focus:before, 
+  &:hover:before,
+  &:focus-visible:before,
   &:active:before {
     @include prefix(animation-name, hvr-ripple-out);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Nothing in this file previously honoured prefers-reduced-motion. Both effects
+// are decorative; a reader who has asked for less motion gets the end state
+// immediately rather than the transition.
+// ---------------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  .hvr-underline-reveal:before {
+    -webkit-transition: none;
+    transition: none;
+  }
+
+  .hvr-ripple-out:before,
+  .hvr-ripple-out:hover:before,
+  .hvr-ripple-out:focus-visible:before,
+  .hvr-ripple-out:active:before {
+    -webkit-animation: none;
+    animation: none;
   }
 }

@@ -43,7 +43,30 @@ Manifest.toml           # Locked Julia package versions
 .gitlab-ci.yml          # GitLab Pages CI (fallback deployment config)
 ```
 
-Build output (`__site/`) is git-ignored. The `google599763433934e4da.html` file is a Google Search Console verification file and must be kept at the root.
+Build output (`__site/`) is git-ignored. The `google599763433934e4da.html` file is a Google Search Console verification file; it must be served at that exact URL, which only works because it is listed in `keep_path` in `config.md` — see [Franklin config](#franklin-config-configmd).
+
+---
+
+## Franklin config (`config.md`)
+
+Everything Franklin reads must sit **inside the `+++` block**. Anything below the closing
+`+++` is page body content and is silently ignored as configuration — this is a trap the repo
+has already fallen into once (`keep_path` sat below it and did nothing for months).
+
+| Setting | Why it is there |
+| --- | --- |
+| `ignore` | Files/directories Franklin must not copy or render. Currently: `node_modules/`, `package.json`, `package-lock.json`, `CLAUDE.md`, `plan.md`, `preview.html`, `Project.toml`, `Manifest.toml`, `.vscode/`, `_sass/`. Without these, Franklin publishes them — e.g. `CLAUDE.md` becomes a public page at `/CLAUDE/`, and all of `_sass/` is served under `/_sass/`. `README.md` and `LICENSE.md` are ignored by default; nothing else is. |
+| `keep_path` | Paths served verbatim instead of being converted to `<name>/index.html`. Only `google599763433934e4da.html` needs this — Google Search Console requests that exact URL and GitHub Pages does not fall back from `/x.html` to `/x/index.html`. |
+| `generate_rss` | On. Franklin writes `/feed.xml`. |
+
+**Franklin owns `sitemap.xml` and `robots.txt`.** `generate_sitemap` and `generate_robots`
+default to `true`, so Franklin deletes and rewrites both on every build. Do not add
+hand-maintained copies at the repo root — they will not reach production. To take manual
+control, set those two variables to `false` *and* add the files to `keep_path`.
+
+`package.json` / `package-lock.json` do not exist in the repo; CI creates them in the root
+when it runs `npm install highlight.js` just before `optimize()`, which is why they are in
+`ignore`.
 
 ---
 
@@ -124,21 +147,41 @@ x = 1 + 1
 After modifying SCSS, recompile with Julia Sass from the `_sass/` directory:
 
 ```julia
+using Pkg; Pkg.activate("..")
 using Sass
 Sass.compile_file("style.scss", "../_css/celeste.min.css"; output_style = Sass.compressed)
 ```
 
+**Commit the regenerated `_css/celeste.min.css` in the same commit as the `_sass/` change.**
+CI never runs Sass, so a `_sass/` edit without the recompiled artifact ships as a no-op.
+No source map is generated or committed.
+
+**Load order matters.** `_layout/head_mixin.html` loads `/css/franklin.css` *before*
+`/css/celeste.min.css`. Several Celeste rules tie franklin.css on specificity and win on
+source order alone — and franklin.css's `.franklin-content h1` (0,1,1) beats Celeste's bare
+`h1` (0,0,1) regardless of order, so a large part of `_sass/` does not currently reach the
+browser. Do not reorder those two `<link>` tags. `_sass/adjust.scss` is where franklin.css
+overrides belong.
+
 ### Key design tokens (`_sass/utilities/_variables.scss`)
 | Variable | Value | Usage |
-|----------|-------|-------|
-| Primary blue | `#0A3b76` | Body top border, nav icons, social links |
-| Link color | `#5a81b0` | Anchor tags |
-| Nav hover | `#2098d1` | Underline on hover |
-| Body text | `#515151` | Main copy |
-| Heading text | `#313131` | h1–h6 |
-| Font (body) | Source Sans Pro | Via Google Fonts CDN |
-| Font (code) | Source Code Pro | Via Google Fonts CDN |
-| Font size | 17px desktop / 15px mobile | |
+| --- | --- | --- |
+| `$body-top-border-color`, `$nav-icon-background-color`, `$post-title-color` | `#0A3b76` | Body top border, nav "DI" chip, social icons |
+| `$link-color` | `#4a7ab5` | Anchor tags — **but see note below** |
+| `$nav-link-underline-color` | `#2098d1` | Underline on hover |
+| `$nav-link-color` | `#263663` | Nav links |
+| `$body-text-color` | `#3d3d3d` | Main copy |
+| Heading color (`_sass/base/_typography.scss`) | `#252525` | h1–h6 |
+| `$post-date-color` | `#9a9a9a` | Post dates (class not emitted by Franklin) |
+| `$font-stack` | Source Sans Pro | Via Google Fonts CDN |
+| `$code-font-stack` | Source Code Pro | Via Google Fonts CDN |
+| `$font-size` / `$font-size-mobile` | 17px / 15px | Switches at `max-width: 38em` (608px) |
+
+> **Several of these tokens do not reach the browser.** `_css/franklin.css` scopes its rules at
+> `.franklin-content <el>`, which outranks Celeste's bare element selectors. In practice links
+> render `#004de6` (not `$link-color`), `\citet` citations render `green`, headings render
+> 24/22/20px (not the 2rem/1.5rem/1.25rem scale), and body leading is `1.35em` (not `1.5`).
+> Reclaiming these in `_sass/adjust.scss` is pending work — see `plan.md`.
 
 ### Additional stylesheets
 - `_css/franklin.css` — Franklin.jl default styles (do not override without care)
@@ -189,7 +232,8 @@ using Franklin; optimize()
 
 ### New top-level page
 1. Create `pagename.md` at the repository root with `@def title = "..."` frontmatter
-2. Add a nav link in `_layout/nav.html`
+2. Add a nav link in `_layout/header.html`
+3. If the page is repo-internal and should *not* be published, add it to `ignore` in `config.md`
 
 ### New assets
 - Images: place in `_assets/`, reference in Markdown as `/assets/filename.jpg`
@@ -224,7 +268,7 @@ A parallel configuration for GitLab Pages exists as a fallback. Deploys to `publ
 | `config.md` | Global site metadata, RSS config, global LaTeX macros |
 | `utils.jl` | Custom Franklin extension functions (`hfun_*`, `lx_*`) |
 | `_layout/head.html` | HTML `<head>`: meta tags, CSS/font CDN links |
-| `_layout/nav.html` | Site navigation bar markup |
+| `_layout/header.html` | Site navigation bar markup |
 | `_layout/foot.html` | Page footer markup |
 | `_sass/utilities/_variables.scss` | Design tokens: colors, fonts, breakpoints |
 | `_sass/adjust.scss` | Franklin.jl-specific CSS adjustments |
@@ -272,4 +316,10 @@ After making changes:
 - [ ] Verify code blocks have syntax highlighting (requires `@def hascode = true`)
 - [ ] Check all internal links resolve
 - [ ] Confirm RSS frontmatter values are single-line strings
-- [ ] Push to feature branch and confirm GitHub Actions build passes before merging to `main`
+- [ ] Run a full `optimize()` and inspect `__site/` — `serve()` does **not** pre-render KaTeX,
+      so math layout must be checked against an `optimize()` build
+- [ ] Confirm nothing repo-internal leaked into `__site/` (see `ignore` in `config.md`)
+- [ ] Verify locally before merging. **CI builds only on push to `main`/`master`** — there is
+      no pull-request or feature-branch build, so merging to `main` *is* the first real build.
+      (A failed build does not break the live site: the deploy step is separate and only runs
+      on success, so `gh-pages` keeps serving the last good build.)

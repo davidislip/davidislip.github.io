@@ -13,6 +13,12 @@
   @keyframes #{$name} { @content; } 
 }
 
+// One breakpoint, one mixin. Replaces the hand-typed @media queries that
+// previously spanned three values across two unit systems in two files.
+@mixin mobile() {
+  @media (max-width: $bp-mobile) { @content; }
+}
+
 @mixin hacks() {
   // Transforms need to be block-level to work
   display: inline-block;
