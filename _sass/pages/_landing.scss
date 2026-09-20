@@ -1,14 +1,14 @@
 /**
  * _landing.scss
  * Styles for the landing page
+ *
+ * NOTE: `.social-icons a` is (0,1,1), the same specificity as
+ * `.franklin-content a` in adjust.scss, which is imported later and therefore
+ * wins the tie. The colour and text-decoration below are consequently NOT what
+ * renders — adjust.scss §3 carries an explicit `.social-icons a` guard that
+ * does. They are kept here as the component's own defaults for the case where
+ * the icons are ever used outside .franklin-content.
  */
-
-.landing-title {
-    color: $post-title-color;
-    text-align: center;
-    border-bottom: 1px solid #c0c0c0;
-    padding-bottom: 0.7rem;
-}
 
 .social-icons {
     display: flex;
@@ -19,12 +19,12 @@
 
     a {
         text-decoration: none;
-        color: #0A3b76;
+        color: var(--color-brand);
         font-size: 24px;
         transition: color 0.2s ease;
 
         &:hover {
-            color: #2098d1;
+            color: var(--color-link);
             text-decoration: none;
         }
     }

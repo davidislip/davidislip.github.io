@@ -8,12 +8,21 @@
   text-align: center;
   margin-bottom: 4rem;
 
-  @media (max-width: 38em) {
-    margin-bottom: 2rem;
+  @include mobile {
+    margin-bottom: 2.5rem;
   }
 
+  // Flex centring instead of inline-block + text-align. Lets the row shrink
+  // its own gaps before it is forced to wrap, which is what keeps five items
+  // plus the logo on one line down to 320px.
   ul {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
     padding: 0;
+    list-style: none;
     border-bottom-color: $nav-bottom-border-color;
     border-bottom-width: $nav-bottom-border-width;
     border-bottom-style: solid;
@@ -30,9 +39,19 @@
       font-size: $nav-link-font-size;
       letter-spacing: 0.06em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
   }
 
+  // The "DI" chip. Kept deliberately — it is the site's identity mark.
+  //
+  // The transparent border enlarges the hit area without enlarging the visible
+  // disc (`background-clip: padding-box` keeps the navy on the content box).
+  // MEASURED hit area: 41px square on desktop, 34px at 375px and below —
+  // the size tracks the nav font-size, so it shrinks with the type scale.
+  // That clears WCAG 2.2 AA SC 2.5.8 (24x24) but not AAA SC 2.5.5 (44x44).
+  // If you change the 0.55rem border, change the focus `outline-offset` in
+  // _sass/adjust.scss to match, or the focus ring stops landing on the disc.
   li.logo a {
     color: $nav-icon-color;
     background: $nav-icon-background-color;
@@ -41,7 +60,35 @@
     height: 1.6em;
     border-radius: 50px;
     line-height: 1.6em;
-    margin: 0 1rem;
+    margin: 0 0.75rem;
     padding: 0;
+    text-align: center;
+    background-clip: padding-box;
+    border: 0.55rem solid transparent;
+    box-sizing: content-box;
+  }
+
+  // Below ~505px the row previously wrapped to two ragged lines and stranded
+  // the chip as the trailing item of row one. Shrinking the horizontal padding
+  // and tracking keeps it on one line; the chip keeps its full touch target
+  // because the transparent border is unaffected.
+  @include mobile {
+    ul { gap: 0; }
+
+    li a {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    li.logo a { margin: 0 0.35rem; }
+  }
+
+  @media (max-width: 26em) {
+    li a {
+      padding-left: 0.3rem;
+      padding-right: 0.3rem;
+      font-size: 0.75rem;
+    }
   }
 }

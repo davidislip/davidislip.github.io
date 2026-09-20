@@ -37,8 +37,13 @@ p {
   margin-bottom: 1rem;
 }
 
-strong {
-  color: #303030;
+// #303030 was LIGHTER than the body text it sits inside (luminance 0.0273 vs
+// 0.0208 for --color-text), so bold ran paler than the prose around it — most
+// visibly on every author name in research.md. `b` is included because
+// index.md uses it for the same role and was rendering a different colour.
+strong,
+b {
+  color: var(--color-heading);
 }
 
 ul, ol, dl {

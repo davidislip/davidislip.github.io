@@ -1,8 +1,356 @@
+// ===========================================================================
+//  adjust.scss — the franklin.css reclaim layer
+// ===========================================================================
+//
+//  WHY THIS FILE EXISTS
+//  _layout/head_mixin.html loads /css/franklin.css (line 1) then
+//  /css/celeste.min.css (line 4). Franklin wraps all page content in
+//  <div class="franklin-content">, so franklin.css's class-scoped rules
+//  (specificity 0,1,1) beat Celeste's bare element rules (0,0,1) — regardless
+//  of load order. Without this file most of _sass/ never reaches the browser.
+//
+//  TWO RULES FOR EDITING IT
+//   1. Every rule here must be at .franklin-content-scoped specificity or
+//      higher, and should name the franklin.css rule it beats.
+//   2. Where the two tie on specificity, this file wins ONLY because
+//      celeste.min.css loads second and adjust.scss is the last @import in
+//      style.scss. Do not reorder those two <link> tags in head_mixin.html.
+//
+//  SCOPE NOTE: this site emits no <pre>, <code>, <table>, <blockquote> or <hr>
+//  on any page (verified against a full optimize() build). Styling for those is
+//  deliberately NOT written here — it would be rules for elements that do not
+//  exist. Add them when content needs them.
+// ===========================================================================
 
+
+// ---------------------------------------------------------------------------
+//  1. CONTENT COLUMN
+//     beats  franklin.css:82-87   .franklin-content { padding: 12.5%;
+//                                  line-height: 1.35em }            (0,1,0)
+//            franklin.css:90-96   @media(min-width:940px){ width:705px } (0,1,0)
+//     ties on specificity, wins on source order.
+// ---------------------------------------------------------------------------
 .franklin-content {
-    @extend .container;
+  // `* { box-sizing: border-box }` (base/_global.scss:6) makes max-width
+  // include the padding, so the gutters are added back here. Without this the
+  // real measure would be ~62 characters, not the ~68 intended.
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  width: auto;                       // kills franklin.css:92 `width: 705px`
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  margin-left: auto;
+  margin-right: auto;
+
+  color: var(--color-text);
+  // Unitless. franklin.css:86 uses `1.35em`, which computes to an absolute
+  // px value and is then inherited as that fixed length by every descendant
+  // regardless of its own font-size.
+  line-height: var(--line-height);
+
+  @include mobile {
+    --gutter: 1.25rem;
+
+    // The 150px floated headshot leaves a ~190px text track at 375px and
+    // ~135px at 320px, which strands one-word and 4px-wide lines beside it.
+    // Unfloat and centre it instead; the bio then gets the full column.
+    .container img.right {
+      float: none;
+      display: block;
+      margin: 0 auto 1.25rem;
+    }
+  }
+
+  // index.md nests <div class="container"> inside .franklin-content for the
+  // headshot block, which adds a second gutter. Neutralise the geometry but
+  // leave the class in place — franklin.css:40-44 `.franklin-content
+  // .container img` is what holds off franklin.css:261-265's `padding-left:10%`.
+  .container {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
+
+// ---------------------------------------------------------------------------
+//  2. HEADINGS — restore a real type scale
+//     beats  franklin.css:128-130  h1 24px / h2 22px / h3 20px      (0,1,1)
+//            franklin.css:141-153  the double-rule and rule ornaments
+//     The rendered h2:h3 ratio was 22:20 = 1.09, which is not a hierarchy.
+//     This is a 1.2 (minor third) scale in rem, so it tracks the mobile root.
+// ---------------------------------------------------------------------------
+.franklin-content {
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-heading);
+    line-height: 1.25;
+  }
+
+  h1 {
+    font-size: 1.728rem;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    // was `3px double lightgrey` — demoted to a single meaningful hairline
+    border-bottom: 1px solid var(--color-rule-strong);
+  }
+
+  h2 {
+    font-size: 1.44rem;
+    margin: 2.25rem 0 0.75rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  h3 { font-size: 1.2rem;  margin: 1.75rem 0 0.5rem; }
+  h4, h5, h6 { font-size: 1rem; margin: 1.5rem 0 0.5rem; }
+
+  > h1:first-child { margin-top: 0; }
+
+  // Franklin wraps the whole heading text in <a class="header-anchor">, so
+  // without this the link rule in §3 underlines every heading on the site.
+  h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+
+// ---------------------------------------------------------------------------
+//  3. LINKS
+//     beats  franklin.css:207-210  .franklin-content a { color: #004de6;
+//                                   text-decoration: none }          (0,1,1)
+//            franklin.css:220-221  .eqref a / .bibref a { color: green }
+//
+//     The underline is not decorative. --color-link #0f4c8c against body text
+//     #24272c is 1.74:1 — far below the 3:1 that would let colour alone
+//     distinguish a link inside running text (WCAG 1.4.1).
+// ---------------------------------------------------------------------------
+.franklin-content {
+  a {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  // Journal apparatus — \citet keys, \biblabel anchors, equation references.
+  // A distinct accent so citations do not read as ordinary prose links; three
+  // \citet calls appear within eight lines in blogs/post1.md.
+  .bibref a,
+  .eqref a {
+    color: var(--color-mark);
+  }
+
+  // The table of contents is navigation, not prose. Underlining every entry
+  // turns presentations.md's index into a wall of rules.
+  .franklin-toc a {
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+
+  // Icon-only links. `.social-icons a` in pages/_landing.scss is also (0,1,1),
+  // so the rule above ties it and wins on source order — without this guard the
+  // four home-page icons render underlined and in link blue instead of brand
+  // navy. There is no text for an underline to sit under; the icon is the
+  // affordance.
+  .social-icons a {
+    color: var(--color-brand);
+    text-decoration: none;
+
+    &:hover { color: var(--color-link); }
+  }
+}
+
+
+// ---------------------------------------------------------------------------
+//  4. FOCUS
+//     There was no :focus or :focus-visible rule anywhere in _sass/ — outline
+//     appeared only in base/_normalize.scss. Keyboard users had no visible
+//     focus indicator at all.
+// ---------------------------------------------------------------------------
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+// The chip is a filled navy disc, so a navy outline would vanish against it.
+// A white ring is used instead — but the offset must equal the transparent
+// border width exactly ($nav-chip-pad), or the ring lands on white paper
+// outside the disc and is invisible. At -0.45rem it did exactly that.
+.nav-main li.logo a:focus-visible {
+  outline: 2px solid var(--color-bg);
+  outline-offset: -0.55rem;           // == the transparent border in _navigation.scss
+  box-shadow: 0 0 0 2px var(--color-link);
+}
+
+// The nav sits at y=3, directly under `body { border-top: 3px solid }`, so a
+// 2px ring at a 2px offset is drawn at y=-1 — its top edge falls outside the
+// viewport and the rest onto the navy border. A few px of headroom fixes it.
+.nav-main ul {
+  padding-top: 4px;
+}
+
+
+// ---------------------------------------------------------------------------
+//  5. DISPLAY MATH
+//     beats  franklin.css:304-308  .katex-display { overflow-x: auto }  (0,1,0)
+//            franklin.css:281-287  .katex-display .katex {
+//                                   display: inline-block }            (0,2,0)
+//            franklin.css:289-295  .katex-display::after (equation numbers)
+//
+//     THE BUG: overflow-x:auto was added without resetting the text-align:
+//     center that KaTeX inherits. A centred box wider than its container
+//     overflows on BOTH sides, and the left overflow is unreachable — you
+//     cannot scroll to it. Equations in both posts are clipped on the left
+//     today.
+//
+//     THE FIX: left-align the scroll container so overflow goes one way only,
+//     and centre the inner box with auto margins when it does fit.
+//     `min-width: min-content` is what forces the full width when it does not.
+// ---------------------------------------------------------------------------
+.franklin-content {
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: left;
+    padding-block: 0.35rem;   // room for tall glyphs, and for the scrollbar
+    margin-inline: calc(-1 * var(--bleed, 0px));
+  }
+
+  // (0,3,0) — beats franklin.css:281-287 (0,2,0) and katex.min.css (0,2,0).
+  //
+  // `white-space: nowrap` is load-bearing, not cosmetic. franklin.css:284 sets
+  // `white-space: normal`, which lets KaTeX break a display equation at an
+  // arbitrary interior point — measured at 320px, three equations across the
+  // two posts were wrapping mid-expression rather than overflowing. With
+  // `normal`, min-content is the widest single token, so `min-width:min-content`
+  // cannot force the full width and the scroll container never engages.
+  // nowrap restores the intended behaviour: the equation stays intact and the
+  // reader scrolls it.
+  .katex-display > .katex {
+    display: block;
+    width: fit-content;
+    min-width: min-content;
+    margin-inline: auto;
+    text-align: initial;
+    white-space: nowrap;
+  }
+
+  // Every display equation was auto-numbered, and nothing in either post
+  // references an equation number — 12 of them in post1.md alone. Suppressed.
+  // To bring numbering back, delete this rule.
+  .katex-display::after {
+    content: none;
+  }
+}
+
+// ---------------------------------------------------------------------------
+//  5b. MATH TYPEFACE — Computer Modern Sans instead of Computer Modern serif
+//
+//  KaTeX defaults to KaTeX_Math (Computer Modern math italic), a serif. That is
+//  correct LaTeX, but it sets every formula in a different family from the sans
+//  prose around it, which is conspicuous on pages that are mostly formulas.
+//  KaTeX already ships a Computer Modern Sans family — the `sfmath` look — and
+//  it was going unused. Remapping to it makes the math and the body agree.
+//
+//  Verified before adopting:
+//    * KaTeX_SansSerif Regular / Bold / Italic are all present in _libs and
+//      all resolve — no synthetic italic, no fallback.
+//    * The Greek these posts depend on (mu sigma Sigma alpha beta Theta Xi chi)
+//      is present in the sans family. That was the real risk; Greek falling
+//      back would have been worse than the original mismatch.
+//    * Franklin PRE-RENDERS the math, so glyph positions are baked using the
+//      serif metrics. Sans glyphs are 0-7% narrower, so display equations get
+//      slightly narrower (measured: -0 to -22px across the 12 in post1) and
+//      spacing loosens a touch. Nothing collides.
+//
+//  Deliberately NOT remapped: KaTeX_Size1-4 (big delimiters, sums, integrals),
+//  KaTeX_AMS (blackboard bold, e.g. \mathbb{R}), Caligraphic, Fraktur, Script
+//  and Typewriter. Those are distinct alphabets chosen for meaning, they have
+//  no sans equivalent in the shipped set, and sfmath leaves them serif too.
+//
+//  Variables stay italic. That is not decoration — upright vs italic is
+//  semantic in mathematics (an upright `d` is the differential operator, an
+//  italic `d` is a variable). The sans italic is a much lighter slant than the
+//  calligraphic CM math italic it replaces.
+// ---------------------------------------------------------------------------
+.franklin-content {
+  .katex {
+    font-family: KaTeX_SansSerif, KaTeX_Main, sans-serif;
+  }
+
+  .katex {
+    .mathnormal,
+    .mathit          { font-family: KaTeX_SansSerif; font-style: italic; }
+    .mathrm,
+    .mainrm          { font-family: KaTeX_SansSerif; font-style: normal; }
+    .mathbf          { font-family: KaTeX_SansSerif; font-weight: 700; }
+    .boldsymbol      { font-family: KaTeX_SansSerif; font-style: italic; font-weight: 700; }
+  }
+}
+
+// The bleed track: display math gets more horizontal room than the prose
+// column. Gated so it can never cause horizontal page scroll — it only
+// engages once the viewport can hold the wider track plus both gutters.
+@media (min-width: 54em) {
+  .franklin-content {
+    --bleed: calc(var(--measure-wide) * 0.5 - var(--measure) * 0.5);
+  }
+}
+
+
+// ---------------------------------------------------------------------------
+//  6. PAGE FOOTER
+//     Franklin injects _layout/page_foot.html on every page, inside
+//     .franklin-content. The @extend below pulls in the corrected `footer`
+//     rule from base/_global.scss (lowercase removed, contrast raised there).
+//     beats  franklin.css:55-59  .franklin-content .page-foot a { #a6a2a0 }
+//                                 (0,2,1) — 2.53:1, a real contrast failure
+//            franklin.css:62-66  .page-foot { color: #a6a2a0 }  (0,1,0)
+// ---------------------------------------------------------------------------
 .page-foot {
-    @extend footer;
+  @extend footer;
+}
+
+.franklin-content .page-foot {
+  color: var(--color-muted);
+  // franklin.css:64 also sets `font-family: Arial, serif`, which the @extend
+  // above does not declare and therefore does not beat — the footer was
+  // rendering in Arial on every page while the body was Source Sans.
+  font-family: var(--font-body);
+
+  a {
+    color: var(--color-muted);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+
+    &:hover { color: var(--color-link); }
+  }
+}
+
+
+// ---------------------------------------------------------------------------
+//  7. METADATA IN MONO
+//     Source Code Pro is already loaded and currently styles nothing — there
+//     is no code on the site. Reserved here for metadata only: years, volumes,
+//     page ranges, DOIs. Never prose.
+// ---------------------------------------------------------------------------
+.franklin-content {
+  // `lining` is not a CSS keyword — the figure values are lining-nums /
+  // oldstyle-nums, and the whole declaration is dropped if you get it wrong.
+  // The inner selector must NOT repeat .franklin-content: nesting it inside
+  // the parent block compiles to `.franklin-content .franklin-content ...`,
+  // which matches nothing.
+  .bibref,
+  .page-foot {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
 }

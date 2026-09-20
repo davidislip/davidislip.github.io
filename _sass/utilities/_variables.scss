@@ -1,41 +1,105 @@
 /**
   * _variables.scss
-  * Contains SCSS variables used in this website's stylesheet.
+  * Design tokens.
+  *
+  * Tokens live as CSS custom properties on `:root` so a future dark theme is an
+  * additive @media block rather than a recompile. The SCSS variables below are
+  * thin aliases, kept so the existing partials compile unchanged.
+  *
+  * DO NOT pass an aliased variable to a SCSS colour function (darken/lighten/
+  * mix/rgba) — libsass cannot evaluate a var() and the build will fail.
+  * Verified at the time of writing: nothing in _sass/ does this.
   */
 
+:root {
+  // --- Colour ----------------------------------------------------------
+  // Contrast ratios are against --color-bg unless noted.
+  --color-bg:          #ffffff;
+  --color-surface:     #f5f6f8;  // tinted fill
+  --color-heading:     #16181d;  // h1–h6, <strong>            17.76:1  AAA
+  --color-text:        #24272c;  // body copy; KaTeX inherits  14.98:1  AAA
+  --color-muted:       #4e555e;  // dates, footer, eq numbers   7.54:1  AAA
+  --color-brand:       #0a3b76;  // STRUCTURE ONLY: top border, nav chip
+  --color-link:        #0f4c8c;  // every interactive thing     8.63:1  AAA
+  --color-rule-strong: #7c8fa8;  // meaningful boundaries       3.31:1  (UI min is 3:1)
+  --color-rule:        #c7d3e2;  // decorative hairlines        1.52:1  — must never
+                                 //   be the only thing carrying meaning
+  --color-mark:        #7a1f2b;  // journal apparatus          10.20:1  AAA
+                                 //   \citet, \biblabel, .eqref
+  --color-flag:        #7a4e00;  // status words                7.20:1  AAA
+                                 //   e.g. "(major revision)". 6.66:1 on --color-surface,
+                                 //   so never place it on a tinted row.
+
+  // Against body text rather than the background, --color-link is 1.74:1 and
+  // --color-mark is 1.47:1. Both are far under the 3:1 that would let colour
+  // alone mark a link inside running text, so the underline in adjust.scss is
+  // load-bearing for WCAG 1.4.1, not decoration. Do not remove it.
+
+  // --- Type ------------------------------------------------------------
+  // Kept on single lines: libsass copies custom-property values verbatim,
+  // newlines and all, straight into the "compressed" output.
+  --font-body: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  // Mono is METADATA ONLY — years, volumes, DOIs, dates. Never prose.
+  --font-mono: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  // --- Measure ----------------------------------------------------------
+  // `* { box-sizing: border-box }` (base/_global.scss:6) means a max-width on
+  // .franklin-content INCLUDES its horizontal padding, so the padding is added
+  // back where max-width is applied. --measure is the TEXT column only.
+  //
+  // 34rem ≈ 578px ≈ 68 characters in Source Sans Pro. Deliberately rem, not ch:
+  // `ch` resolves against whatever font is actually rendering, and the Google
+  // Fonts stylesheet has no preload, so a ch-based measure reflows the whole
+  // column when the webfont arrives.
+  --measure:      34rem;
+  --measure-wide: 46rem;  // bleed track for display math
+  --gutter:       1.5rem;
+
+  --line-height: 1.65;    // unitless — franklin.css:86 uses 1.35em, which
+                          // freezes to an absolute px value for all descendants
+  --radius: 6px;
+}
+
+// ---------------------------------------------------------------------------
+// SCSS aliases. These exist only so the pre-existing partials keep compiling;
+// new work should use the custom properties directly.
+// ---------------------------------------------------------------------------
+
 // Globals
-$font-stack: 'Source Sans Pro', sans-serif;
+$font-stack: var(--font-body);
 $font-size: 17px;
 $font-size-mobile: 15px;
 
-$code-font-stack: 'Source Code Pro', monospace;
+$code-font-stack: var(--font-mono);
+
+// Breakpoint. One named value, used everywhere.
+// NOTE: `em` in a media query always resolves against the browser's 16px
+// default, never the 17px root — 40em is 640px. The old 38em was 608px, which
+// looked identical to .franklin-content's 38rem (646px) and was not.
+$bp-mobile: 40em;
 
 // Body
-$body-text-color: #3d3d3d;
-$body-background-color: #ffffff;
-$body-top-border-color: #0A3b76;
+$body-text-color: var(--color-text);
+$body-background-color: var(--color-bg);
+$body-top-border-color: var(--color-brand);
 $body-top-border-width: 3px;
 
 // Links
-$link-color: #4a7ab5;
+$link-color: var(--color-link);
 
 // Navigation
-$nav-bottom-border-color: #c0c0c0;
+$nav-bottom-border-color: var(--color-rule-strong);
 $nav-bottom-border-width: 1px;
 
-$nav-link-color: #263663;
+$nav-link-color: var(--color-text);
 $nav-link-font-size: 0.85rem;
 $nav-link-padding-y: 0.7rem;
 $nav-link-padding-x: 1.5rem;
-$nav-link-underline-color: #2098d1;
+$nav-link-underline-color: var(--color-link);
 
-$nav-icon-color: #ffffff;
-$nav-icon-background-color: #0A3b76;
+$nav-icon-color: var(--color-bg);
+$nav-icon-background-color: var(--color-brand);
 
 // Blog post headings and page titles
-$post-title-color: #0A3b76;
-$post-date-color: #9a9a9a;
-
-// Message box
-$message-color: #717171;
-$message-background-color: #f9f9f9;
+$post-title-color: var(--color-brand);
+$post-date-color: var(--color-muted);

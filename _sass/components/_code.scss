@@ -29,26 +29,7 @@ pre code {
   background-color: transparent;
 }
 
-.highlight {
-  padding: 1rem;
-  margin-bottom: 1rem;
-  font-size: .8rem;
-  line-height: 1.4;
-  background-color: #f9f9f9;
-  border-radius: .25rem;
-
-  pre {
-    margin-bottom: 0;
-    overflow-x: auto;
-  }
-
-  .lineno {
-    display: inline-block; // Ensures the null space also isn't selectable
-    padding-right: .75rem;
-    padding-left: .25rem;
-    color: #999;
-    
-    // Make sure numbers aren't selectable
-    @include prefix(user-select, none);
-  }
-}
+// The `.highlight` / `.lineno` block that used to live here was Rouge/Jekyll
+// markup. Franklin uses highlight.js, which emits `.hljs` and never `.highlight`,
+// so those rules styled nothing. Removed along with the Rouge colour theme that
+// was in _sass/utilities/_syntax-highlighting.scss.
