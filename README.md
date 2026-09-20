@@ -1,6 +1,14 @@
-# Celeste Template
+# davidislip.github.io
 
-Based on the wonderful [Celeste](https://github.com/nicoelayda/celeste) by @nicoelayda.
+Source for [davidislip.github.io](https://davidislip.github.io/) — the personal site of
+David Islip, built with [Franklin.jl](https://franklinjl.org/) and deployed to GitHub
+Pages from `main` by `.github/workflows/Deploy.yml`.
+
+The theme began as [Celeste](https://github.com/nicoelayda/celeste) by @nicoelayda and has
+since been substantially reworked; see `_sass/adjust.scss` for the layer that reconciles it
+with Franklin's own stylesheet.
+
+See `CLAUDE.md` for the full guide to the repository, and `plan.md` for outstanding work.
 
 ## Development
 
