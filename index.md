@@ -11,7 +11,7 @@
     <p>
       <b>Quantitative Researcher</b>, Macro Risk<br>
       Balyasny Asset Management<br>
-      Toronto, ON
+      New York, NY
     </p>
     <p>
       Ph.D., Industrial Engineering (Operations Research)<br>
