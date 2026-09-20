@@ -199,6 +199,32 @@ button:focus-visible,
 
 
 // ---------------------------------------------------------------------------
+//  4b. SKIP LINK
+//     Off-screen until focused, then it lands over the nav. Not `display:none`
+//     or `visibility:hidden`, either of which would make it unfocusable and
+//     therefore pointless.
+// ---------------------------------------------------------------------------
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+
+  &:focus {
+    left: 0.5rem;
+    top: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    background: var(--color-bg);
+    color: var(--color-link);
+    border: 2px solid var(--color-link);
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+}
+
+
+// ---------------------------------------------------------------------------
 //  5. DISPLAY MATH
 //     beats  franklin.css:304-308  .katex-display { overflow-x: auto }  (0,1,0)
 //            franklin.css:281-287  .katex-display .katex {

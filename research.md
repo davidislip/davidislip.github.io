@@ -10,8 +10,8 @@ description = "Published and working papers by David Islip on financial optimiza
 
 -\biblabel{purcaru26}{Purcaru et al. (2026)} **Purcaru**, **Islip**, and **Kwon**, [Mixed-Integer Optimization for Cross-Validated Feature Selection in Linear Classification](https://doi.org/10.1007/s10957-026-03043-w), *Journal of Optimization Theory and Applications*, **210**, Article 16, 2026.
 -\biblabel{grunnesjo26}{Grunnesjö et al. (2026)} **Grunnesjö**, **Islip**, **Li**, **Lu**, and **Kwon**, [A Regime-Switching Decision Support System for Dynamic Portfolio Optimization](https://doi.org/10.1007/s10479-025-06990-1), *Annals of Operations Research*, 2026.
--\biblabel{islip25a}{Islip & Kwon (2025)} **Islip** and **Kwon**, [Two-Stage Stochastic Red-Blue Set Covering: A Decomposition Approach](https://doi.org/10.1007/s10898-025-01472-x), *Journal of Global Optimization*, **91**, 923–951, 2025.
--\biblabel{islip24}{Islip & Kwon (2024)} **Islip** and **Kwon**, [Integration of Support Vector Machines and Mean-Variance Optimization for Capital Allocation](https://doi.org/10.1016/j.ejor.2024.11.022), *European Journal of Operational Research*, **322**(3): 1045-1058, 2024.
+-\biblabel{islip25a}{Islip & Kwon (2025)} **Islip** and **Kwon**, [Stochastic Red-Blue Set Covering: A Decomposition Approach](https://doi.org/10.1007/s10898-025-01472-x), *Journal of Global Optimization*, **91**, 923–951, 2025.
+-\biblabel{islip24}{Islip et al. (2024)} **Islip**, **Kwon**, and **Kim**, [Integration of Support Vector Machines and Mean-Variance Optimization for Capital Allocation](https://doi.org/10.1016/j.ejor.2024.11.022), *European Journal of Operational Research*, **322**(3): 1045-1058, 2024.
 -\biblabel{gaskin23}{Gaskin et al. (2023)} **Gaskin**, **Kalim**, **Wallace**, **Islip**, **Kwon**, and **Liew**, [Portfolio Optimization Techniques for Cryptocurrencies](https://doi.org/10.3905/joi.2023.1.256), *The Journal of Investing*, **32**(3), 50–65, 2023.
 -\biblabel{islip20}{Islip et al. (2020)} **Islip**, **Wei**, and **Kwon**, [Managing construction risk with weather derivatives](https://doi.org/10.1080/0013791X.2020.1733721), *The Engineering Economist*, **66**(2), 150–184, 2020.
 
@@ -19,3 +19,7 @@ description = "Published and working papers by David Islip on financial optimiza
 ## Submitted
 
 -\biblabel{islip25b}{Islip et al. (2025)} **Islip**, **Kwon**, **Bae**, and **Kim**, [Contextual Scenario Generation for Two-Stage Stochastic Programming](https://www.arxiv.org/abs/2502.05349), *Computational Optimization and Applications* (major revision), 2025.
+
+## Thesis
+
+-\biblabel{islip25thesis}{Islip (2025)} **Islip**, [New Applications of Optimization Oracles with a Lens Towards Finance](https://hdl.handle.net/1807/145156), Ph.D. thesis, Department of Mechanical and Industrial Engineering, University of Toronto, June 2025. Supervised by Roy H. Kwon. Open access (CC BY 4.0).

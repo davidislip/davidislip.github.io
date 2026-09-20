@@ -31,6 +31,16 @@
   li {
     display: inline-block;
 
+    // Current page. Not colour alone — a persistent underline, so it reads
+    // without relying on hue (and matches what hover already does).
+    a[aria-current="page"] {
+      color: var(--color-brand);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.35em;
+    }
+
     a {
       color: $nav-link-color;
       display: block;

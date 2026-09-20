@@ -29,6 +29,11 @@ ignore = ["node_modules/", "package.json", "package-lock.json",
 keep_path = ["google599763433934e4da.html"]
 
 # RSS (the website_{title, descr, url} must be defined to get RSS)
+# Default for the {{if hasicons}} gate in _layout/head_mixin.html. Pages that
+# use Font Awesome set `hasicons = true` so the CDN stylesheet is not pulled
+# onto every page for the sake of four icons on one of them.
+hasicons = false
+
 generate_rss = true
 website_title = "David Islip Quant"
 website_descr = "David Islip — Quantitative researcher specializing in financial optimization, machine learning, and operations research."
