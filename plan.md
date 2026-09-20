@@ -1,13 +1,18 @@
 # Site Improvement Plan — davidislip.github.io
 
 **Date:** 2026-09-19, updated 2026-09-20
-**Status:** **§1, Phase 1 and Phase 3 are complete**, applied and verified against a real `optimize()`
-build in headless Chrome, and **uncommitted in the working tree — nothing is deployed yet.** Phase 0 is
-done except the build-only CI job. Both design decisions are settled: the DI chip stays, the body and
-the math are sans.
+**Status:** **§1 and Phases 1, 2, 3 and 5 are complete and deployed.** Phase 0 is done except the
+build-only CI job. Both design decisions are settled: the DI chip stays, the body and the math are sans.
+Everything was verified against a real `optimize()` build in headless Chrome, and then against the live
+site after deploying.
 
-Still open: **Phase 2** (8 content-correctness items), **Phase 4** (11 additive items — the CV and a
-contact route are the biggest real gaps), **Phase 5** (8 housekeeping items), and the CI job.
+Still open:
+
+- **Phase 4** — 11 additive items. A **CV page** and a **contact route** are the two real gaps; the rest
+  is metadata (`rel=canonical`, the RSS URL that 404s) and landmarks (`<main>`, skip link).
+- **Phase 0** — a build-only CI job, worth doing before Phase 4 because that phase touches `utils.jl`,
+  where a Julia error fails the build.
+- **Phase 5** — the CI action pins only, deliberately left for a moment when someone can watch the run.
 
 ### Shipped
 
@@ -467,23 +472,49 @@ branch build.
       announces an empty document — and fold its hardcoded pixel values into the token system.
 - [ ] Generate the blog index from the posts instead of hand-copying teasers.
 
-### Phase 5 — Housekeeping (low priority)
+### Phase 5 — Housekeeping — **APPLIED** (except the CI pins)
 
-- [ ] `Deploy.yml` pins `checkout@v2`, `setup-python@v2` (Python 3.8, EOL),
-      `github-pages-deploy-action@releases/v3`. **These currently work** — every run is green, including
-      two on 2026-08-01 on `ubuntu-24.04`, and `origin/gh-pages` matches `main`. This is a warning-only
-      maintenance item, not a fire. Bump them on a quiet day.
-- [ ] Delete the dead `- master` trigger (no `master` branch exists on the remote).
-- [ ] Delete `.gitlab-ci.yml` — it could not run if it tried.
-- [ ] Remove ~140 KB of unreferenced assets: `website_headshot.jfif`, `rndimg.jpg`, `hamburger.svg`
-      (referenced by nothing — there is no mobile nav), `_assets/scripts/`.
-- [ ] Remove the three template functions in `utils.jl` (`hfun_bar`, `hfun_m1fill`, `lx_baz`) — none is
-      called from any page.
-- [ ] Replace the template `README.md` (still titled "Celeste Template").
-- [ ] `_libs/katex/katex.min.js` (273 KB) and `auto-render.min.js` are deployed but never requested in
-      production — `optimize()` prerenders the math and strips the scripts.
-- [ ] `Project.toml` has no `[compat]` section, and `Manifest.toml` pins `julia_version 1.12.1` while CI
-      installs whatever `version: '1'` resolves to.
+- [x] Deleted the dead `- master` trigger from `Deploy.yml` — no `master` branch exists on the remote,
+      and two branches deploying to one `gh-pages` is a race waiting to happen.
+- [x] Deleted `.gitlab-ci.yml`. It pinned `image: julia:1.6` against a Manifest that requires 1.12.1,
+      so it could not have run.
+- [x] Deleted 164 KB of unreferenced assets: `website_headshot.jfif`, `rndimg.jpg`, `hamburger.svg`
+      (there is no mobile nav for it to belong to) and all of `_assets/scripts/`. Verified referenced by
+      nothing outside the docs that describe them, and verified after the build that every
+      `/assets/...` path still appearing in a built page resolves.
+- [x] Emptied `utils.jl` of Franklin's three template examples (`hfun_bar`, `hfun_m1fill`, `lx_baz`),
+      none of which was called from any page. Kept as a documented stub — Phase 4 adds a real
+      `hfun_` for canonical URLs.
+- [x] Replaced the template `README.md`, which was still titled "Celeste Template" and presented the
+      repo as someone else's theme.
+- [x] Added `[compat]` to `Project.toml` and re-resolved. No dependency version moved; the only
+      Manifest change is the project hash.
+
+- [ ] **CI action pins — deliberately held back.** `checkout@v2`, `setup-python@v2` with Python 3.8,
+      `setup-julia@v1`, `github-pages-deploy-action@releases/v3`. Every run is green on `ubuntu-24.04`
+      and `python-3.8.18-linux-24.04-x64` still resolves, so this is warning-only, not a fire. It is
+      also the one change in this phase that could stop a deploy, so it wants its own commit and
+      someone watching the run.
+
+**Not done, deliberately — the "vendored libs are deployed but never requested" item.**
+
+Re-measured rather than taken on trust, and the picture is different from what the audit described:
+
+| | size | requested by |
+| --- | --- | --- |
+| `_libs/highlight/` | **1.2 MB** | **0 pages** |
+| `_libs/katex/katex.min.js` | 268 KB | 0 pages in production |
+| `_libs/katex/fonts/` | 1.2 MB | every page with math — **required** |
+
+highlight.js is now orphaned outright: removing `hascode` in Phase 2 means no page inserts
+`head_highlight.html` in *either* `serve()` or `optimize()` mode. That is larger than the item the plan
+originally flagged.
+
+Both were left in place anyway. Neither costs a visitor anything — no browser ever requests them — so
+this is branch weight, not page weight. Against that, `ignore`-ing them creates a real footgun: the
+first time anyone adds a fenced code block and sets `hascode = true`, or runs `serve()` on a page with
+math, they get silent 404s on assets that are sitting right there in the repo. Deleting working
+infrastructure to save bytes nobody downloads is the wrong trade.
 
 ---
 
