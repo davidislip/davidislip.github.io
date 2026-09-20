@@ -5,14 +5,8 @@
 the DI chip stays, and the body and the math are both sans. Everything was verified against a real
 `optimize()` build in headless Chrome, then against the live site after deploying.
 
-Still open, all by choice rather than oversight:
-
-1. **A CV page and a contact route** (Phase 4) — parked at the author's request. These remain the two
-   largest gaps for a recruiter or an academic peer arriving from a paper.
-2. **The CI action pins** (Phase 5) — `checkout@v2`, `setup-python@v2`, `github-pages-deploy-action@v3`.
-   Every run is green, so this is warning-only; it is also the one change that could stop a deploy, so
-   it wants its own commit and someone watching the run.
-3. **Publication years** — one decision for the author; see the note under Phase 4.
+**The only thing still open is a CV page and a contact route** (Phase 4), parked at the author's
+request. They remain the two largest gaps for a recruiter or for an academic peer arriving from a paper.
 
 ### Shipped
 
@@ -497,12 +491,14 @@ returns exactly one paper — 2502.05349, already linked. A web search claimed a
 JOTA preprint; it is **not** — different authors entirely (Mori, Ikeda, Tamura, Takano). Do not link it.
 The thesis is the free route to chapters 1, 2 and 4.
 
-**Open question for the author — publication years, deliberately not changed.** Crossref's
-`published-print` puts the EJOR issue at May **2025** (the page says 2024) and the Engineering Economist
-issue at April **2021** (the page says 2020); both currently show the online-first year. Three of four
-indexes report the years as they stand, so this is a convention choice, not an error — but citing
-`322(3), 1045-1058, 2024` is internally inconsistent, because volume 322 issue 3 belongs to 2025. Worth
-one decision, applied to both.
+**Publication years — resolved, both moved to the issue year.** The EJOR paper is now 2025 (Crossref
+`published-print` 2025-05, volume 322 issue 3) and the Engineering Economist paper is 2021
+(`published-print` 2021-04-03, volume 66 issue 2). Both previously carried the online-first year, which
+contradicted the volume and issue printed beside it — `322(3), 1045–1058, 2024` cannot be right when
+that issue belongs to 2025. Reverse-chronological ordering of the Published list is unaffected.
+
+The `\biblabel` keys (`islip24`, `islip20`) were deliberately left as they are: they are opaque anchor
+ids, nothing on the site cites them, and renaming would change URL fragments for no benefit.
 
 **Generated blog index — attempted, tested, and rejected.** A working `{{bloglist}}` was built and run.
 It was dropped because of a failure mode found only by testing it: with one malformed post, `/blog/`
@@ -529,11 +525,25 @@ and the posts is the lesser problem with two posts, and it is now corrected. Rev
 - [x] Added `[compat]` to `Project.toml` and re-resolved. No dependency version moved; the only
       Manifest change is the project hash.
 
-- [ ] **CI action pins — deliberately held back.** `checkout@v2`, `setup-python@v2` with Python 3.8,
-      `setup-julia@v1`, `github-pages-deploy-action@releases/v3`. Every run is green on `ubuntu-24.04`
-      and `python-3.8.18-linux-24.04-x64` still resolves, so this is warning-only, not a fire. It is
-      also the one change in this phase that could stop a deploy, so it wants its own commit and
-      someone watching the run.
+- [x] **CI action pins — done.** `checkout@v2`→`v4`, `setup-python@v2`→`v5`, `setup-julia@v1`→`v2`,
+      `github-pages-deploy-action@releases/v3`→`v4`. Every step had been emitting a Node 20 deprecation
+      notice and running forced on Node 24.
+
+      Two things made this more than a version bump:
+
+      **The deploy action renamed all its inputs in v4** — lower case, and `GITHUB_TOKEN` became
+      `token`. v4 silently ignores the v3 spellings, so the inputs had to change in the same commit as
+      the version or the deploy would have failed with no useful message.
+
+      **Python is pinned to 3.11, not latest, on purpose.** It exists solely for minification: Franklin
+      shells out to `css_html_js_minify` and pip-installs it itself if the import fails
+      (`Franklin/src/build.jl`), which is why there is no explicit pip step in the workflow. That
+      package was last released in **2018** and its classifiers stop at Python 3.6. It ships a
+      pure-Python wheel so pip runs no build step, but 3.12 removed `distutils` and the package predates
+      that by six years. 3.11 is supported until Oct 2027. If it ever does break, Franklin does not
+      fail — it warns `Will not minify` and produces a larger site — so the assert step now greps for
+      exactly that string and fails the run, because a plain `@warn` is not a "Franklin Warning" and the
+      other check would miss it.
 
 **Not done, deliberately — the "vendored libs are deployed but never requested" item.**
 

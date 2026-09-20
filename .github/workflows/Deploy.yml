@@ -24,19 +24,29 @@ jobs:
       contents: write
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
-    # NOTE: Python is necessary for the pre-rendering (minification) step
+
+    # Python is needed for MINIFICATION only, not for the build. Franklin shells
+    # out to `css_html_js_minify` and pip-installs it itself if the import fails
+    # (Franklin/src/build.jl) — which is why there is no explicit pip step here.
+    #
+    # That package was last released in 2018 and its classifiers stop at Python
+    # 3.6, so do not bump this pin casually. 3.11 is deliberate: 3.12 removed
+    # distutils, and the package predates that by six years. It ships a
+    # pure-Python wheel, so pip does not run a build step.
+    #
+    # If minification ever does break, Franklin warns "Will not minify" and
+    # carries on — the site still builds, just larger. The assert step below
+    # turns that silent degradation into a failed run.
     - name: Install python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v6
       with:
-        python-version: '3.8'
-    # NOTE: Here you can install dependencies such as matplotlib if you use
-    # packages such as PyPlot.
-    # - run: pip install matplotlib
+        python-version: '3.11'
+
     - name: Install Julia
-      uses: julia-actions/setup-julia@v1
+      uses: julia-actions/setup-julia@v3
       with:
         version: '1' # Latest stable Julia release.
     # NOTE
@@ -70,6 +80,15 @@ jobs:
           exit 1
         fi
 
+        # Franklin degrades silently to an unminified site if python3 or
+        # css_html_js_minify is unavailable. That is a plain @warn, not a
+        # "Franklin Warning", so the check above would miss it.
+        if grep -q "Will not minify" build.log; then
+          echo "::error::minification did not run — see the Python pin above."
+          grep -n -B2 -A6 "Will not minify" build.log
+          exit 1
+        fi
+
         missing=0
         for f in index.html research/index.html presentations/index.html \
                  blog/index.html blogs/post1/index.html blogs/post2/index.html \
@@ -95,10 +114,14 @@ jobs:
     # Only main publishes. Every other branch stops after the build above, which
     # is the point: a Julia error in utils.jl, a malformed +++ block or a broken
     # template fails the run without touching the live site.
+    # v4 renamed every input to lower case and replaced GITHUB_TOKEN with
+    # `token`. The v3 spellings are silently ignored by v4, so this had to
+    # change with the version bump, not after it. `token` is passed explicitly
+    # because the checkout above uses persist-credentials: false.
     - name: Build and Deploy
       if: github.ref == 'refs/heads/main'
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: __site
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        folder: __site
