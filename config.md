@@ -13,7 +13,20 @@ mintoclevel = 2
 # these files might be copied and, if markdown, processed by Franklin which
 # you might not want. Indicate directories by ending the name with a `/`.
 # Base files such as LICENSE.md and README.md are ignored by default.
-ignore = ["node_modules/"]
+# NOTE: CLAUDE.md and plan.md are repo-internal docs — without them listed here
+# Franklin builds them into public pages at /CLAUDE/ and /plan/.
+# `_sass/` is SCSS source, not served output — without it listed here Franklin
+# copies all 17 partials to the live site under /_sass/.
+# package.json / package-lock.json do not exist in the repo — CI creates them in
+# the root when it runs `npm install highlight.js`, just before optimize().
+ignore = ["node_modules/", "package.json", "package-lock.json",
+          "CLAUDE.md", "plan.md", "preview.html",
+          "Project.toml", "Manifest.toml", ".vscode/", "_sass/"]
+
+# Serve these paths verbatim instead of converting them to <name>/index.html.
+# The Google Search Console file MUST be served at its exact .html URL.
+# This must stay inside the +++ block to be parsed as config at all.
+keep_path = ["google599763433934e4da.html"]
 
 # RSS (the website_{title, descr, url} must be defined to get RSS)
 generate_rss = true
@@ -28,5 +41,3 @@ Add here global latex commands to use throughout your pages.
 -->
 \newcommand{\R}{\mathbb R}
 \newcommand{\scal}[1]{\langle #1 \rangle}
-
-keep_path = ["google599763433934e4da.html", "robots.txt", "sitemap.xml"]
