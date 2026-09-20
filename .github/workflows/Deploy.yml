@@ -1,8 +1,22 @@
 name: Build and Deploy
+
+# Builds on EVERY branch, deploys only from main. Previously this ran only on
+# main, which meant merging to main was simultaneously the first build test and
+# the publish — there was no branch on which to discover a broken build first.
+#
+# `pull_request` is deliberately absent: this repo is merged locally with
+# `git merge`, not through PRs, so a pull_request trigger would never fire and
+# would only double-run if PRs were ever adopted.
 on:
   push:
     branches:
-      - main
+      - '**'
+
+# A newer push to the same branch makes an in-flight run obsolete.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -33,12 +47,56 @@ jobs:
     #   Julia packages which may be required to successfully build your site.
     #   The last line should be `optimize()` though you may want to give it
     #   specific arguments, see the documentation or ?optimize in the REPL.
-    - run: julia -e '
-            using Pkg; Pkg.activate("."); Pkg.instantiate();
-            using NodeJS; run(`$(npm_cmd()) install highlight.js`);
-            using Franklin;
-            optimize()'
+    - name: Build
+      shell: bash
+      run: |
+        set -o pipefail
+        julia -e '
+          using Pkg; Pkg.activate("."); Pkg.instantiate();
+          using NodeJS; run(`$(npm_cmd()) install highlight.js`);
+          using Franklin;
+          optimize()' 2>&1 | tee build.log
+
+    # optimize() returns 0 even when a page fails to convert — it emits a
+    # "Franklin Warning" and simply does not write that page. A job that checks
+    # only the exit code will happily deploy a site with a missing page, so the
+    # build is asserted explicitly below.
+    - name: Assert the build actually produced the site
+      shell: bash
+      run: |
+        if grep -q "Franklin Warning" build.log; then
+          echo "::error::Franklin emitted a warning — a page failed to convert."
+          grep -n -A3 "Franklin Warning" build.log
+          exit 1
+        fi
+
+        missing=0
+        for f in index.html research/index.html presentations/index.html \
+                 blog/index.html blogs/post1/index.html blogs/post2/index.html \
+                 404.html feed.xml sitemap.xml robots.txt \
+                 google599763433934e4da.html; do
+          if [ ! -s "__site/$f" ]; then
+            echo "::error::missing or empty build output: __site/$f"
+            missing=1
+          fi
+        done
+
+        # Nothing repo-internal may reach the published site. Each of these has
+        # leaked before; see `ignore` in config.md.
+        for f in CLAUDE.md plan.md preview.html _sass Project.toml \
+                 Manifest.toml .vscode package.json; do
+          if [ -e "__site/$f" ]; then
+            echo "::error::repo-internal file leaked into the build: __site/$f"
+            missing=1
+          fi
+        done
+
+        exit $missing
+    # Only main publishes. Every other branch stops after the build above, which
+    # is the point: a Julia error in utils.jl, a malformed +++ block or a broken
+    # template fails the run without touching the live site.
     - name: Build and Deploy
+      if: github.ref == 'refs/heads/main'
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,18 +1,18 @@
 # Site Improvement Plan — davidislip.github.io
 
 **Date:** 2026-09-19, updated 2026-09-20
-**Status:** **§1 and Phases 1, 2, 3 and 5 are complete and deployed.** Phase 0 is done except the
-build-only CI job. Both design decisions are settled: the DI chip stays, the body and the math are sans.
-Everything was verified against a real `optimize()` build in headless Chrome, and then against the live
-site after deploying.
+**Status: every phase is complete**, bar three things listed below. Both design decisions are settled —
+the DI chip stays, and the body and the math are both sans. Everything was verified against a real
+`optimize()` build in headless Chrome, then against the live site after deploying.
 
-Still open:
+Still open, all by choice rather than oversight:
 
-- **Phase 4** — 11 additive items. A **CV page** and a **contact route** are the two real gaps; the rest
-  is metadata (`rel=canonical`, the RSS URL that 404s) and landmarks (`<main>`, skip link).
-- **Phase 0** — a build-only CI job, worth doing before Phase 4 because that phase touches `utils.jl`,
-  where a Julia error fails the build.
-- **Phase 5** — the CI action pins only, deliberately left for a moment when someone can watch the run.
+1. **A CV page and a contact route** (Phase 4) — parked at the author's request. These remain the two
+   largest gaps for a recruiter or an academic peer arriving from a paper.
+2. **The CI action pins** (Phase 5) — `checkout@v2`, `setup-python@v2`, `github-pages-deploy-action@v3`.
+   Every run is green, so this is warning-only; it is also the one change that could stop a deploy, so
+   it wants its own commit and someone watching the run.
+3. **Publication years** — one decision for the author; see the note under Phase 4.
 
 ### Shipped
 
@@ -304,7 +304,7 @@ The ordering is forced by three hard constraints:
 Nothing else should merge until a branch push produces a green build, because from here every merge to
 `main` publishes.
 
-- [ ] Add a build-only CI job: duplicate the Julia step under `on: pull_request` and
+- [x] Added a build-only CI job: duplicate the Julia step under `on: pull_request` and
       `push: branches: ['**']`, with the deploy step gated to `if: github.ref == 'refs/heads/main'`.
 - [x] Add `Sass` to `Project.toml` / `Manifest.toml` — it is **not currently a dependency**, so the
       compile command documented in `README.md` cannot run in a clean checkout.
@@ -445,32 +445,71 @@ sized in `em` and tracks the nav type scale. That clears WCAG 2.2 AA (SC 2.5.8, 
 > with a full franklin.css reclaim inventory, `color-scheme: dark light` on `:root`, and a swap to the
 > already-vendored `github-dark.min.css`.
 
-### Phase 4 — Additive structure and content
+### Phase 4 — Additive structure and content — **APPLIED except the CV and contact page**
 
-These add pages and touch `utils.jl`, so they carry real build risk and must go through the Phase 0
-branch build.
+- [x] `rel=canonical` + per-page `og:url` via `hfun_canonical` in `utils.jl`. `og:url` was hard-coded to
+      the homepage on all seven pages and there was no canonical anywhere. Emits the **directory** form
+      (`/research/`), matching every internal link on the site, with the home page as the bare domain
+      and `404.html` left alone because `url_curpage` honours `keep_path`.
+- [x] RSS autodiscovery fixed: `head.html` advertised `/feed`, Franklin writes `/feed.xml` — every page
+      linked a 404 feed.
+- [x] `<main>` landmark and skip-to-content link. Franklin's content `<div>` is not ours to change, so
+      `<main>` wraps it from `head.html` and closes in `foot.html`.
+- [x] `aria-label` on the nav, an accessible name on the DI chip, and `aria-current="page"` via
+      `{{ispage}}` — verified exactly one per page, with blog posts marking Blog as current. Styled with
+      a persistent underline, not colour alone.
+- [x] Font Awesome. Worse than recorded: the local copy was **v4.7.0**, its `@font-face` pointed at a
+      `fonts/` directory that does not exist, *and* the markup uses `fab`/`fas`, which are v5+ classes
+      v4.7 does not define. It 404'd on every page while doing nothing. Deleted; the working v6.4.2 CDN
+      copy moved out of the page body into `<head>` behind a `hasicons` gate so it loads only where used.
+      Added `preconnect` and `display=swap` for Google Fonts.
+- [x] JSON-LD: `affiliation` and `alumniOf` are now Organization / CollegeOrUniversity objects, plus
+      `worksFor` and `knowsAbout`.
+- [x] `404.md` rewritten — it was a stack of styled `<div>`s with no heading, so a screen reader
+      announced an empty document, and its only exit was a link labelled "Click here".
+- [x] Home page first screen: it opened by presenting him as a Toronto Ph.D. student, with the actual
+      role at Balyasny buried in the last sentence of paragraph two.
+- [x] **`research.md`: the Ph.D. thesis added, and two citation errors corrected.** See below.
 
-- [ ] **A CV page.** There is no CV or resume anywhere — nav, assets or source. For a recruiter this is
-      the conspicuous omission.
-- [ ] **A contact route.** No email, no mailto, no contact section anywhere on the site.
-- [ ] **Rewrite the home page's first screen.** Above the fold it presents him as a Toronto Ph.D.
-      student; the actual current role at Balyasny is the last sentence of the second paragraph.
-- [ ] **`research.md`:** add the Ph.D. thesis (currently absent) and a route to the five paywalled
-      papers — arXiv/preprint links, or per-paper pages with abstract and BibTeX.
-- [ ] `og:url` + `rel=canonical` via a new `hfun_` in `utils.jl` — currently `og:url` is hard-coded to
-      the homepage on all seven pages and there is no canonical anywhere.
-- [ ] Fix the RSS autodiscovery URL: `head.html` advertises `/feed`, Franklin writes `/feed.xml`. Every
-      page currently links a 404 feed. Add a visible feed link too.
-- [ ] `<main>` landmark, skip-to-content link, accessible name on the nav, `aria-current` for the active
-      page (the nav gives no indication of where you are).
-- [ ] Remove the duplicate Font Awesome load: a local v4.7.0 whose webfonts 404 on every page, plus a
-      second v6.4.2 injected from cdnjs inside the body of `index.md`. Add `preconnect` and
-      `display=swap` to the Google Fonts link.
-- [ ] JSON-LD: `affiliation` and `alumniOf` are bare strings where schema.org expects Organization
-      objects. Consider `ScholarlyArticle` markup on the publications page.
-- [ ] Give `404.md` a real `<h1>` — it is currently a stack of styled `<div>`s, so a screen reader
-      announces an empty document — and fold its hardcoded pixel values into the token system.
-- [ ] Generate the blog index from the posts instead of hand-copying teasers.
+- [ ] **A CV page** — parked at the author's request.
+- [ ] **A contact route** — parked at the author's request.
+
+**The thesis.** Found and verified three times independently (the researcher, an adversarial verifier,
+and a direct fetch of the repository API):
+
+> **New Applications of Optimization Oracles with a Lens Towards Finance**
+> Islip, David Ryan · Ph.D. · Mechanical and Industrial Engineering, University of Toronto · June 2025
+> Advisor: Kwon, Roy H · <https://hdl.handle.net/1807/145156> · free PDF, CC BY 4.0
+
+Link the `hdl.handle.net` handle, not a `tspace.library.utoronto.ca` URL — TSpace has migrated and now
+302-redirects to `utoronto.scholaris.ca`. The handle is the stable identifier.
+
+**Two citation errors on the publications page, both confirmed against Crossref directly:**
+
+- The EJOR paper has **three** authors — David Islip, Roy H. Kwon and **Seongmoon Kim**. The page
+  credited only "Islip and Kwon", dropping a co-author.
+- The JOGO paper was published as "**Stochastic** red-blue set covering: a decomposition approach". The
+  page had "**Two-Stage** Stochastic Red-Blue Set Covering" — those words are not in the published title.
+
+**Open-access preprints: none exist.** All six published papers are closed, confirmed independently by
+OpenAlex (`oa_status: closed`) and Semantic Scholar (`CLOSED`). An exhaustive arXiv author search
+returns exactly one paper — 2502.05349, already linked. A web search claimed arXiv 2605.07089 was the
+JOTA preprint; it is **not** — different authors entirely (Mori, Ikeda, Tamura, Takano). Do not link it.
+The thesis is the free route to chapters 1, 2 and 4.
+
+**Open question for the author — publication years, deliberately not changed.** Crossref's
+`published-print` puts the EJOR issue at May **2025** (the page says 2024) and the Engineering Economist
+issue at April **2021** (the page says 2020); both currently show the online-first year. Three of four
+indexes report the years as they stand, so this is a convention choice, not an error — but citing
+`322(3), 1045-1058, 2024` is internally inconsistent, because volume 322 issue 3 belongs to 2025. Worth
+one decision, applied to both.
+
+**Generated blog index — attempted, tested, and rejected.** A working `{{bloglist}}` was built and run.
+It was dropped because of a failure mode found only by testing it: with one malformed post, `/blog/`
+**is never written at all** — the deployed page would 404 — and `optimize()` still exits 0. Today's
+hand-written index degrades far better: a broken post breaks only its own page. Drift between the index
+and the posts is the lesser problem with two posts, and it is now corrected. Revisit if the blog grows.
+(This is also what prompted the CI build assertions — see Phase 0.)
 
 ### Phase 5 — Housekeeping — **APPLIED** (except the CI pins)
 

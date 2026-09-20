@@ -13,11 +13,15 @@
   <!-- Meta description (page-specific via @def description, falls back to global) -->
   <meta name="description" content="{{fill description}}">
 
+  <!-- Per-page canonical, in the directory form the site's own links use.
+       See hfun_canonical in utils.jl. -->
+  <link rel="canonical" href="{{canonical}}">
+
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="David Islip Quant">
   <meta property="og:description" content="{{fill description}}">
-  <meta property="og:url" content="https://davidislip.github.io/">
+  <meta property="og:url" content="{{canonical}}">
   <!-- Dedicated social-card image: the in-page headshot is 600px wide, below the
        1200px threshold LinkedIn/Facebook need to render a large card. -->
   <meta property="og:image" content="https://davidislip.github.io/assets/headshot-og.jpg">
@@ -32,8 +36,9 @@
   <meta name="twitter:description" content="{{fill description}}">
   {{isdef title}}<meta name="twitter:title" content="{{fill title}} — David Islip">{{end}}
 
-  <!-- RSS feed discovery -->
-  <link rel="alternate" type="application/rss+xml" title="David Islip Quant" href="https://davidislip.github.io/feed">
+  <!-- RSS feed discovery. Franklin writes the feed to /feed.xml — this used to
+       advertise /feed, so every page on the site linked a 404. -->
+  <link rel="alternate" type="application/rss+xml" title="David Islip Quant" href="https://davidislip.github.io/feed.xml">
 
   <!-- JSON-LD: Person schema -->
   <script type="application/ld+json">
@@ -44,8 +49,29 @@
     "url": "https://davidislip.github.io/",
     "image": "https://davidislip.github.io/assets/headshot.jpg",
     "jobTitle": "Quantitative Researcher",
-    "affiliation": "Balyasny Asset Management",
-    "alumniOf": "University of Toronto",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "Balyasny Asset Management",
+      "url": "https://www.bamfunds.com/"
+    },
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Balyasny Asset Management",
+      "url": "https://www.bamfunds.com/"
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Toronto",
+      "url": "https://www.utoronto.ca/"
+    },
+    "knowsAbout": [
+      "Operations Research",
+      "Mathematical Optimization",
+      "Quantitative Risk Modeling",
+      "Stochastic Programming",
+      "Portfolio Optimization",
+      "Machine Learning for Finance"
+    ],
     "sameAs": [
       "https://github.com/davidislip",
       "https://www.linkedin.com/in/david-ryan-islip-1889798a/",
@@ -56,6 +82,11 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   {{insert header.html}}
+  <!-- Franklin emits the content as <div class="franklin-content"> and that
+       markup is not ours to change, so the <main> landmark wraps it from here.
+       It is closed in _layout/foot.html. -->
+  <main id="main">
 
 <!-- Content appended here -->
