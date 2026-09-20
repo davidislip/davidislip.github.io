@@ -1,6 +1,8 @@
 +++
 title = "Some Facts about Bootstrapping"
 hasmath = true
+date = Date(2025, 1, 28)
+rss_pubdate = Date(2025, 1, 28)
 rss = "Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations."
 description = "Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations."
 +++
@@ -102,5 +104,5 @@ $$
 $$
 This is the result the bootstrapped quantiles of Part 2 are implicitly relying on.
 ## Google Colab Notebook
-The notebook located [here](https://drive.google.com/file/d/1EQ1f5KXrCXojDyLLVKmG7hgUyIcv7xT6/view?usp=sharing) demonstrates the facts highlighted above. 
+[This notebook](https://drive.google.com/file/d/1EQ1f5KXrCXojDyLLVKmG7hgUyIcv7xT6/view?usp=sharing) demonstrates the facts highlighted above. 
 
