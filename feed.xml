@@ -23,25 +23,6 @@
 
 <item>
   <title>
-    <![CDATA[  Home  ]]>
-  </title>
-  <link> https://davidislip.github.io/index.html </link>
-  <guid> https://davidislip.github.io/index.html </guid>
-  <description>
-    <![CDATA[  David Islip is a quantitative researcher and Ph.D. graduate from the University of Toronto, specializing in financial optimization, machine learning, and operations research. Currently at Balyasny Asset Management.  ]]>
-  </description>  
-    
-  <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>  
-  
-  
-  <atom:author>
-    <atom:name>David Islip</atom:name>
-  </atom:author>
-        
-</item>
-
-<item>
-  <title>
     <![CDATA[  Some Facts about Bootstrapping  ]]>
   </title>
   <link> https://davidislip.github.io/blogs/post1/index.html </link>
@@ -50,26 +31,7 @@
     <![CDATA[  Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations.  ]]>
   </description>  
     
-  <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>  
-  
-  
-  <atom:author>
-    <atom:name>David Islip</atom:name>
-  </atom:author>
-        
-</item>
-
-<item>
-  <title>
-    <![CDATA[  Presentations  ]]>
-  </title>
-  <link> https://davidislip.github.io/presentations/index.html </link>
-  <guid> https://davidislip.github.io/presentations/index.html </guid>
-  <description>
-    <![CDATA[  Conference presentations and talks by David Islip on stochastic programming, portfolio optimization, and machine learning in finance.  ]]>
-  </description>  
-    
-  <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>  
+  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
   
   
   <atom:author>
@@ -88,7 +50,45 @@
     <![CDATA[  An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming.  ]]>
   </description>  
     
-  <pubDate>Sat, 01 Aug 2026 00:00:00 +0000</pubDate>  
+  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>David Islip</atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
+    <![CDATA[  Home  ]]>
+  </title>
+  <link> https://davidislip.github.io/index.html </link>
+  <guid> https://davidislip.github.io/index.html </guid>
+  <description>
+    <![CDATA[  David Islip is a quantitative researcher and Ph.D. graduate from the University of Toronto, specializing in financial optimization, machine learning, and operations research. Currently at Balyasny Asset Management.  ]]>
+  </description>  
+    
+  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>David Islip</atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
+    <![CDATA[  Presentations  ]]>
+  </title>
+  <link> https://davidislip.github.io/presentations/index.html </link>
+  <guid> https://davidislip.github.io/presentations/index.html </guid>
+  <description>
+    <![CDATA[  Conference presentations and talks by David Islip on stochastic programming, portfolio optimization, and machine learning in finance.  ]]>
+  </description>  
+    
+  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
   
   
   <atom:author>
