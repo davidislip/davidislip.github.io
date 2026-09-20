@@ -87,14 +87,24 @@ Used for `index.md`, `research.md`, `presentations.md`, `blog.md`, `404.md`:
 @def rss_pubdate = Date(2024, 1, 1)
 ```
 
-### Blog posts (TOML `+++` syntax)
+### Blog posts (`+++` block)
 Used for files under `blogs/`:
 
 ```
 +++
 title = "Post Title"
+hasmath = true
+date = Date(2025, 1, 28)
+rss_pubdate = Date(2025, 1, 28)
 +++
 ```
+
+> **This block is evaluated as Julia, not parsed as TOML** — despite looking like
+> TOML and being described as such for a long time. The difference bites on dates:
+> `date = 2025-01-28` is not a date, it is the arithmetic expression `2025 - 1 - 28`,
+> which silently evaluates to the integer `1996`. No error is raised; the RSS
+> `pubDate` just quietly falls back to the build time. Always use the Julia
+> constructor `Date(y, m, d)`.
 
 **Key rules:**
 - `rss` value must be a single line (no newlines)

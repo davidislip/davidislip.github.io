@@ -1,17 +1,19 @@
 +++
 title = "Probability of Constraint Satisfaction and Robust Optimization"
 hasmath = true
+date = Date(2025, 1, 29)
+rss_pubdate = Date(2025, 1, 29)
 rss = "An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming."
 description = "An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming."
 +++
 
-# Probability of constraint satisfaction and Robust Optimization
+# Probability of Constraint Satisfaction and Robust Optimization
 
 This post explores some of the properties of robust mean-variance optimization. 
 
 Consider the classic mean-variance optimization model to select a portfolio $\mathbf{x} \in \mathbb{R}^N$
 $$
-\min_{\mathbf{x}} \mathbf{x}^{\intercal} Q \mathbf{x} \quad \textit{s.t.}\quad  \mathbf{1}^{\intercal}\mathbf{x} = 1, \ \mathbf{x} \geq \mathbf{0},\  \boldsymbol{\mu}^{\intercal}\mathbf{x} \geq r_{\text{min}},
+\min_{\mathbf{x}} \mathbf{x}^{\intercal} \mathbf{Q} \mathbf{x} \quad \textit{s.t.}\quad  \mathbf{1}^{\intercal}\mathbf{x} = 1, \ \mathbf{x} \geq \mathbf{0},\  \boldsymbol{\mu}^{\intercal}\mathbf{x} \geq r_{\text{min}},
 $$
 where $r_{\text{min}}$ is the target return, $\mathbf{Q}$ is the covariance matrix of asset returns, and  $\boldsymbol{\mu}$ is the expected return. 
 
@@ -29,9 +31,14 @@ with
 $$
 \boldsymbol{\mu}^{\intercal}\mathbf{x} \geq r_{\text{min}} \ \forall \boldsymbol{\mu} \in \mathcal{U},
 $$
-where $\mathcal{U}$ is an uncertainty set for the mean. 
-A popular uncertainty set is the ellipsoid centered at the estimate $\hat{\boldsymbol{\mu}}$ with shape parameter  
-$$\Theta = \frac{1}{T}\begin{pmatrix}
+where $\mathcal{U}$ is an uncertainty set for the mean.
+
+A popular choice is the ellipsoid centred at the estimate $\hat{\boldsymbol{\mu}}$,
+$$
+\mathcal{U} = \left\{ \boldsymbol{\mu} : (\boldsymbol{\mu} - \hat{\boldsymbol{\mu}})^{\intercal} \boldsymbol{\Theta}^{-1} (\boldsymbol{\mu} - \hat{\boldsymbol{\mu}}) \leq \delta^2 \right\},
+$$
+with shape parameter
+$$\boldsymbol{\Theta} = \frac{1}{T}\begin{pmatrix}
 \hat{Q}_{11} & 0 & \cdots & 0 \\
 0 & \hat{Q}_{22} & \cdots & 0 \\
 \vdots & \vdots & \ddots & \vdots \\
@@ -52,4 +59,4 @@ Now let $\mathbf{x}_{\text{ROB}} \left(\hat{\boldsymbol{\mu}}, \hat{\mathbf{Q}} 
 
 ## Google Colab Notebook
 
-The notebook located [here](https://colab.research.google.com/drive/1miJ8VW_YhU3dDYCLTiv61soPiyNXGSG0?usp=sharing) explores these facts in a contrived setting where we have sampling access to the return distribution. Indeed, the robust model increases the probability of satisfying the return constraint. 
+[This Colab notebook](https://colab.research.google.com/drive/1miJ8VW_YhU3dDYCLTiv61soPiyNXGSG0?usp=sharing) explores these facts in a contrived setting where we have sampling access to the return distribution. Indeed, the robust model increases the probability of satisfying the return constraint. 
