@@ -3,74 +3,74 @@
        Added `General` registry to ~/.julia/registries
 ┌ Warning: The active manifest file has dependencies that were resolved with a different julia version (1.12.1). Unexpected behavior may occur.
 └ @ ~/work/davidislip.github.io/davidislip.github.io/Manifest.toml:0
-   Installed ExprTools ─────────── v0.1.10
-   Installed CodecZlib ─────────── v0.7.8
+   Installed URIs ──────────────── v1.6.1
+   Installed NodeJS ────────────── v2.0.0
    Installed Sass ──────────────── v0.2.0
    Installed DelimitedFiles ────── v1.9.1
-   Installed NodeJS ────────────── v2.0.0
    Installed LiveServer ────────── v1.5.0
-   Installed URIs ──────────────── v1.6.1
-   Installed Literate ──────────── v2.20.1
+   Installed ExprTools ─────────── v0.1.10
+   Installed CodecZlib ─────────── v0.7.8
    Installed Franklin ──────────── v0.10.97
-   Installed OpenSSL ───────────── v1.5.0
-   Installed ExceptionUnwrapping ─ v0.1.11
+   Installed Literate ──────────── v2.20.1
    Installed OrderedCollections ── v1.8.1
-   Installed PrecompileTools ───── v1.3.3
-   Installed ConcurrentUtilities ─ v2.5.0
    Installed TranscodingStreams ── v0.11.3
-   Installed MbedTLS ───────────── v1.1.9
+   Installed ConcurrentUtilities ─ v2.5.0
+   Installed ExceptionUnwrapping ─ v0.1.11
    Installed MIMEs ─────────────── v0.1.4
+   Installed PrecompileTools ───── v1.3.3
+   Installed MbedTLS ───────────── v1.1.9
+   Installed OpenSSL ───────────── v1.5.0
    Installed libsass_jll ───────── v3.6.6+0
-   Installed StructUtils ───────── v2.5.1
    Installed LoggingExtras ─────── v1.2.0
-   Installed IOCapture ─────────── v0.2.5
+   Installed StructUtils ───────── v2.5.1
    Installed BitFlags ──────────── v0.1.9
    Installed HTTP ──────────────── v1.10.19
-   Installed MbedTLS_jll ───────── v2.28.10+0
+   Installed IOCapture ─────────── v0.2.5
    Installed JSON ──────────────── v1.2.0
-   Installed FranklinTemplates ─── v0.10.3
    Installed Parsers ───────────── v2.8.3
-   Installed Preferences ───────── v1.5.0
-   Installed JLLWrappers ───────── v1.7.1
+   Installed MbedTLS_jll ───────── v2.28.10+0
    Installed SimpleBufferStream ── v1.2.0
+   Installed JLLWrappers ───────── v1.7.1
+   Installed Preferences ───────── v1.5.0
    Installed DocStringExtensions ─ v0.9.5
+   Installed FranklinTemplates ─── v0.10.3
   Installing 3 artifacts
-   Installed artifact MbedTLS    1.0 MiB
    Installed artifact libsass    6.6 MiB
+   Installed artifact MbedTLS    1.0 MiB
    Installed artifact nodejs_app 25.4 MiB
 Precompiling packages...
-   0.8 s  ✓ BitFlags
-   0.8 s  ✓ DocStringExtensions
+   0.7 s  ✓ BitFlags
+   0.7 s  ✓ DocStringExtensions
    1.0 s  ✓ OrderedCollections
+   0.9 s  ✓ ConcurrentUtilities
    1.1 s  ✓ URIs
-   0.5 s  ✓ ExprTools
-   1.5 s  ✓ ConcurrentUtilities
+   0.9 s  ✓ ExprTools
+   0.6 s  ✓ SimpleBufferStream
+   0.9 s  ✓ TranscodingStreams
    0.6 s  ✓ IOCapture
-   1.1 s  ✓ TranscodingStreams
-   0.9 s  ✓ SimpleBufferStream
-   0.7 s  ✓ DelimitedFiles
-   1.7 s  ✓ MIMEs
-   1.0 s  ✓ LoggingExtras
-   0.7 s  ✓ ExceptionUnwrapping
-   1.3 s  ✓ Preferences
-   1.6 s  ✓ StructUtils
-   1.1 s  ✓ CodecZlib
-   1.5 s  ✓ NodeJS
-   0.9 s  ✓ JLLWrappers
-   0.8 s  ✓ PrecompileTools
-   1.2 s  ✓ libsass_jll
-   1.4 s  ✓ MbedTLS_jll
-   3.5 s  ✓ OpenSSL
+   0.5 s  ✓ DelimitedFiles
+   1.5 s  ✓ MIMEs
+   0.9 s  ✓ LoggingExtras
+   1.0 s  ✓ StructUtils
+   1.2 s  ✓ Preferences
+   0.9 s  ✓ ExceptionUnwrapping
+   0.5 s  ✓ CodecZlib
+   1.1 s  ✓ NodeJS
+   0.8 s  ✓ JLLWrappers
+   0.6 s  ✓ PrecompileTools
+   0.9 s  ✓ libsass_jll
+   1.0 s  ✓ MbedTLS_jll
+   2.3 s  ✓ OpenSSL
+   1.3 s  ✓ Sass
    1.3 s  ✓ MbedTLS
-   1.6 s  ✓ Sass
-  14.5 s  ✓ Parsers
-   5.5 s  ✓ JSON
-   1.1 s  ✓ Literate
-  19.6 s  ✓ HTTP
-   0.9 s  ✓ LiveServer
-   0.7 s  ✓ FranklinTemplates
-  19.3 s  ✓ Franklin
-  31 dependencies successfully precompiled in 47 seconds. 31 already precompiled.
+  11.3 s  ✓ Parsers
+   4.1 s  ✓ JSON
+   1.0 s  ✓ Literate
+  15.6 s  ✓ HTTP
+   0.7 s  ✓ LiveServer
+   0.5 s  ✓ FranklinTemplates
+  15.8 s  ✓ Franklin
+  31 dependencies successfully precompiled in 39 seconds. 31 already precompiled.
 
-added 1 package in 542ms
+added 1 package in 428ms
   Activating project at `~/work/davidislip.github.io/davidislip.github.io`
