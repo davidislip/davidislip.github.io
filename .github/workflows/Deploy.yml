@@ -24,7 +24,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
         persist-credentials: false
 
@@ -41,12 +41,12 @@ jobs:
     # carries on — the site still builds, just larger. The assert step below
     # turns that silent degradation into a failed run.
     - name: Install python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.11'
 
     - name: Install Julia
-      uses: julia-actions/setup-julia@v2
+      uses: julia-actions/setup-julia@v3
       with:
         version: '1' # Latest stable Julia release.
     # NOTE
