@@ -1,0 +1,76 @@
+  Activating project at `~/work/davidislip.github.io/davidislip.github.io`
+  Installing known registries into `~/.julia`
+       Added `General` registry to ~/.julia/registries
+┌ Warning: The active manifest file has dependencies that were resolved with a different julia version (1.12.1). Unexpected behavior may occur.
+└ @ ~/work/davidislip.github.io/davidislip.github.io/Manifest.toml:0
+   Installed URIs ──────────────── v1.6.1
+   Installed DelimitedFiles ────── v1.9.1
+   Installed NodeJS ────────────── v2.0.0
+   Installed CodecZlib ─────────── v0.7.8
+   Installed ExprTools ─────────── v0.1.10
+   Installed LiveServer ────────── v1.5.0
+   Installed Sass ──────────────── v0.2.0
+   Installed Literate ──────────── v2.20.1
+   Installed ConcurrentUtilities ─ v2.5.0
+   Installed ExceptionUnwrapping ─ v0.1.11
+   Installed OrderedCollections ── v1.8.1
+   Installed TranscodingStreams ── v0.11.3
+   Installed PrecompileTools ───── v1.3.3
+   Installed MIMEs ─────────────── v0.1.4
+   Installed MbedTLS ───────────── v1.1.9
+   Installed Franklin ──────────── v0.10.97
+   Installed OpenSSL ───────────── v1.5.0
+   Installed StructUtils ───────── v2.5.1
+   Installed libsass_jll ───────── v3.6.6+0
+   Installed IOCapture ─────────── v0.2.5
+   Installed LoggingExtras ─────── v1.2.0
+   Installed JSON ──────────────── v1.2.0
+   Installed BitFlags ──────────── v0.1.9
+   Installed HTTP ──────────────── v1.10.19
+   Installed Parsers ───────────── v2.8.3
+   Installed FranklinTemplates ─── v0.10.3
+   Installed MbedTLS_jll ───────── v2.28.10+0
+   Installed SimpleBufferStream ── v1.2.0
+   Installed JLLWrappers ───────── v1.7.1
+   Installed Preferences ───────── v1.5.0
+   Installed DocStringExtensions ─ v0.9.5
+  Installing 3 artifacts
+   Installed artifact MbedTLS    1.0 MiB
+   Installed artifact libsass    6.6 MiB
+   Installed artifact nodejs_app 25.4 MiB
+Precompiling packages...
+   0.7 s  ✓ BitFlags
+   0.9 s  ✓ DocStringExtensions
+   0.9 s  ✓ URIs
+   0.7 s  ✓ ExprTools
+   1.4 s  ✓ OrderedCollections
+   1.5 s  ✓ ConcurrentUtilities
+   0.8 s  ✓ TranscodingStreams
+   0.6 s  ✓ SimpleBufferStream
+   0.8 s  ✓ IOCapture
+   0.8 s  ✓ DelimitedFiles
+   0.8 s  ✓ LoggingExtras
+   2.1 s  ✓ MIMEs
+   1.0 s  ✓ ExceptionUnwrapping
+   1.6 s  ✓ StructUtils
+   1.5 s  ✓ Preferences
+   1.4 s  ✓ NodeJS
+   0.9 s  ✓ CodecZlib
+   0.7 s  ✓ PrecompileTools
+   0.9 s  ✓ JLLWrappers
+   1.4 s  ✓ libsass_jll
+   1.4 s  ✓ MbedTLS_jll
+   3.1 s  ✓ OpenSSL
+   1.1 s  ✓ MbedTLS
+   1.5 s  ✓ Sass
+  14.9 s  ✓ Parsers
+   5.6 s  ✓ JSON
+   1.0 s  ✓ Literate
+  20.0 s  ✓ HTTP
+   0.9 s  ✓ LiveServer
+   0.7 s  ✓ FranklinTemplates
+  19.6 s  ✓ Franklin
+  31 dependencies successfully precompiled in 48 seconds. 31 already precompiled.
+
+added 1 package in 535ms
+  Activating project at `~/work/davidislip.github.io/davidislip.github.io`
