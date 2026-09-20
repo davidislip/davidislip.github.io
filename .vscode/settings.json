@@ -1,3 +1,11 @@
 {
-    "julia.environmentPath": "c:\\Users\\david\\Documents\\website"
+    // Point the Julia extension at this repo's Project.toml rather than the
+    // default ~/.julia/environments/v1.x, so the REPL and language server see
+    // Franklin, NodeJS and Sass without a manual Pkg.activate(".").
+    //
+    // ${workspaceFolder} rather than an absolute path: the extension resolves
+    // it (see julia.environmentPath in the extension's package.json), and the
+    // hardcoded "c:\\Users\\david\\Documents\\website" that used to be here
+    // only worked on one machine.
+    "julia.environmentPath": "${workspaceFolder}"
 }
