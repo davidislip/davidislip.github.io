@@ -22,25 +22,27 @@ _assets/                # Static files served under /assets/
   scripts/              # Julia scripts for content generation
   *.jpg, *.png, etc.    # Images and favicons
 _css/                   # Compiled CSS output — DO NOT EDIT DIRECTLY
-_layout/                # HTML templates (head, foot, nav, page, post wrappers)
-_libs/                  # Vendored third-party JS (highlight.js, KaTeX)
+_layout/                # HTML templates (head, header, foot, page_foot, tag)
+_libs/                  # Vendored third-party JS/CSS (highlight.js, KaTeX)
 _rss/                   # RSS feed XML templates (head.xml, item.xml)
 _sass/                  # SCSS source files — EDIT THESE for styling changes
   base/                 # Normalize, global reset, layout grid, typography
-  components/           # Navigation, pagination, code blocks, message boxes
-  pages/                # Landing page and blog post page styles
-  utilities/            # Variables, mixins, syntax highlighting, animations
+  components/           # Navigation, code blocks
+  pages/                # Landing page styles
+  utilities/            # Variables (design tokens), mixins, animations
+  adjust.scss           # The franklin.css reclaim layer — see Styling below
 blogs/                  # Blog post Markdown files (post1.md, post2.md, …)
 config.md               # Franklin global config: metadata, RSS, LaTeX macros
 index.md                # Home page
-blog.md                 # Blog index/landing
-research.md             # Publications list (published, submitted, in progress)
+blog.md                 # Blog index/landing (hand-written; see note below)
+research.md             # Publications, plus the Ph.D. thesis
 presentations.md        # Conference talks and slides
 404.md                  # Custom 404 error page
 utils.jl                # Custom Franklin HTML/LaTeX extension functions
-Project.toml            # Julia package dependencies
+preview.html            # LOCAL style specimen — not published (in `ignore`)
+plan.md                 # Improvement plan / audit record — not published
+Project.toml            # Julia package dependencies (incl. Sass, for the CSS build)
 Manifest.toml           # Locked Julia package versions
-.gitlab-ci.yml          # GitLab Pages CI (fallback deployment config)
 ```
 
 Build output (`__site/`) is git-ignored. The `google599763433934e4da.html` file is a Google Search Console verification file; it must be served at that exact URL, which only works because it is listed in `keep_path` in `config.md` — see [Franklin config](#franklin-config-configmd).
@@ -166,36 +168,68 @@ Sass.compile_file("style.scss", "../_css/celeste.min.css"; output_style = Sass.c
 CI never runs Sass, so a `_sass/` edit without the recompiled artifact ships as a no-op.
 No source map is generated or committed.
 
-**Load order matters.** `_layout/head_mixin.html` loads `/css/franklin.css` *before*
-`/css/celeste.min.css`. Several Celeste rules tie franklin.css on specificity and win on
-source order alone — and franklin.css's `.franklin-content h1` (0,1,1) beats Celeste's bare
-`h1` (0,0,1) regardless of order, so a large part of `_sass/` does not currently reach the
-browser. Do not reorder those two `<link>` tags. `_sass/adjust.scss` is where franklin.css
-overrides belong.
+### The cascade problem, and `adjust.scss`
 
-### Key design tokens (`_sass/utilities/_variables.scss`)
-| Variable | Value | Usage |
+**This is the single most important thing to understand before editing any CSS here.**
+
+`_layout/head_mixin.html` loads `/css/franklin.css` *before* `/css/celeste.min.css`. Franklin
+wraps all page content in `<div class="franklin-content">`, so franklin.css's class-scoped
+rules (specificity `0,1,1`) beat Celeste's bare element rules (`0,0,1`) **regardless of load
+order**. A plain `h1 { … }` in `_sass/base/_typography.scss` will not reach the browser.
+
+`_sass/adjust.scss` exists to reclaim those rules at `.franklin-content`-scoped specificity,
+and it is where franklin.css overrides belong. Two rules for editing it:
+
+1. Write selectors at `.franklin-content`-scope or higher, and name the franklin.css rule you
+   are beating.
+2. Where the two tie on specificity, adjust.scss wins **only** because celeste.min.css loads
+   second and `@import "adjust"` is last in `style.scss`. **Do not reorder those two `<link>`
+   tags** — the typography silently reverts.
+
+Two traps worth knowing:
+
+- `.katex { font-size: 1em !important }` in franklin.css. Any KaTeX sizing must be written at
+  `.franklin-content .katex` with `!important` or it does nothing.
+- `.franklin-content { max-width: … }` includes its padding, because `* { box-sizing:
+  border-box }`. The gutters are added back explicitly in adjust.scss.
+
+### Design tokens (`_sass/utilities/_variables.scss`)
+
+Tokens are **CSS custom properties on `:root`**, so a future dark theme is an additive
+`@media` block rather than a recompile. The SCSS variables are thin aliases kept so the older
+partials still compile — never pass one to a SCSS colour function (`darken`, `mix`, …), which
+cannot evaluate a `var()`.
+
+| Token | Value | Usage |
 | --- | --- | --- |
-| `$body-top-border-color`, `$nav-icon-background-color`, `$post-title-color` | `#0A3b76` | Body top border, nav "DI" chip, social icons |
-| `$link-color` | `#4a7ab5` | Anchor tags — **but see note below** |
-| `$nav-link-underline-color` | `#2098d1` | Underline on hover |
-| `$nav-link-color` | `#263663` | Nav links |
-| `$body-text-color` | `#3d3d3d` | Main copy |
-| Heading color (`_sass/base/_typography.scss`) | `#252525` | h1–h6 |
-| `$post-date-color` | `#9a9a9a` | Post dates (class not emitted by Franklin) |
-| `$font-stack` | Source Sans Pro | Via Google Fonts CDN |
-| `$code-font-stack` | Source Code Pro | Via Google Fonts CDN |
-| `$font-size` / `$font-size-mobile` | 17px / 15px | Switches at `max-width: 38em` (608px) |
+| `--color-heading` | `#16181d` | h1–h6, `<strong>`, `<b>` — 17.76:1 |
+| `--color-text` | `#24272c` | Body copy; KaTeX inherits it — 14.98:1 |
+| `--color-muted` | `#4e555e` | Dates, page footer — 7.54:1 |
+| `--color-brand` | `#0a3b76` | Structure only: top border, nav "DI" chip, social icons |
+| `--color-link` | `#0f4c8c` | Every interactive thing — 8.63:1 |
+| `--color-mark` | `#7a1f2b` | Journal apparatus: `\citet`, `\biblabel`, `.eqref` |
+| `--color-rule-strong` / `--color-rule` | `#7c8fa8` / `#c7d3e2` | Meaningful vs decorative rules |
+| `--measure` / `--measure-wide` | `34rem` / `46rem` | Prose column; bleed track for display math |
+| `--line-height` | `1.65` | Unitless — franklin.css's `1.35em` freezes to an absolute px |
+| `--font-body` / `--font-mono` | Source Sans Pro / Source Code Pro | Mono is **metadata only**, never prose |
+| `$bp-mobile` | `40em` | The one breakpoint; use the `mobile()` mixin |
 
-> **Several of these tokens do not reach the browser.** `_css/franklin.css` scopes its rules at
-> `.franklin-content <el>`, which outranks Celeste's bare element selectors. In practice links
-> render `#004de6` (not `$link-color`), `\citet` citations render `green`, headings render
-> 24/22/20px (not the 2rem/1.5rem/1.25rem scale), and body leading is `1.35em` (not `1.5`).
-> Reclaiming these in `_sass/adjust.scss` is pending work — see `plan.md`.
+> Link colour against body text is 1.74:1 and `--color-mark` is 1.47:1 — far below the 3:1 that
+> would let colour alone mark a link. **The underline in adjust.scss is load-bearing for WCAG
+> 1.4.1, not decoration.**
+
+### Math typeface
+
+KaTeX is remapped to `KaTeX_SansSerif` (Computer Modern Sans, the `sfmath` look) so formulas
+match the sans body. Big delimiters, blackboard bold (`\mathbb`), Caligraphic, Fraktur and
+Typewriter are deliberately left serif — distinct alphabets chosen for meaning, with no sans
+equivalent in the shipped set.
 
 ### Additional stylesheets
-- `_css/franklin.css` — Franklin.jl default styles (do not override without care)
-- Font Awesome 6.4.2 loaded via CDN for social icons
+- `_css/franklin.css` — Franklin.jl default styles; read before overriding
+- Font Awesome 6.4.2 from cdnjs, loaded **only on pages that set `hasicons = true`**
+  (currently just the home page). There is no local copy — the one that used to be here was
+  v4.7.0, 404'd on every page, and predated the `fab`/`fas` classes the markup uses.
 
 ---
 
@@ -230,15 +264,25 @@ using Franklin; optimize()
 ## Adding Content
 
 ### New blog post
-1. Create `blogs/postN.md` with TOML frontmatter:
+1. Create `blogs/postN.md`. The `+++` block is **Julia, not TOML** — use `Date(y, m, d)`:
    ```
    +++
    title = "Your Post Title"
+   hasmath = true
+   date = Date(2026, 5, 1)
+   rss_pubdate = Date(2026, 5, 1)
+   rss = "One-line summary. No newlines."
+   description = "One-line summary. No newlines."
    +++
    # Your Post Title
    Content here...
    ```
-2. Add a link to the new post in `blog.md`
+   Without `date`, the RSS `pubDate` silently falls back to the CI build time.
+2. Add a link and summary to `blog.md`. **That index is hand-written and will drift.** A
+   generated `{{bloglist}}` was built and rejected: with one malformed post, `/blog/` is never
+   written at all and `optimize()` still exits 0, so the page would 404 in production. The
+   hand-written version degrades better — a broken post breaks only its own page. Revisit if
+   the blog grows.
 
 ### New top-level page
 1. Create `pagename.md` at the repository root with `@def title = "..."` frontmatter
@@ -255,19 +299,38 @@ using Franklin; optimize()
 ## CI/CD and Deployment
 
 ### GitHub Actions (`.github/workflows/Deploy.yml`)
-Triggers on push to `main` or `master`:
 
-1. Checkout code
-2. Install Python 3.8 (for minification via `css-html-js-minify`)
-3. Install latest stable Julia
-4. Install NodeJS packages (`highlight.js`) and instantiate Julia environment
-5. Run `optimize()` to build the site into `__site/`
-6. Deploy `__site/` to the `gh-pages` branch using `JamesIves/github-pages-deploy-action`
+**Builds on every branch; deploys only from `main`.** Push a feature branch and the build runs
+in full — so a Julia error in `utils.jl`, a malformed `+++` block or a broken template is
+caught before it can reach the live site. The deploy step is gated by
+`if: github.ref == 'refs/heads/main'`.
+
+1. Checkout (`actions/checkout@v7`)
+2. Install Python 3.11 — **for minification only**, see below
+3. Install latest stable Julia (`julia-actions/setup-julia@v3`)
+4. `npm install highlight.js`, `Pkg.instantiate()`, then `optimize()`, teed to `build.log`
+5. **Assert the build actually produced the site** — see below
+6. Deploy `__site/` to `gh-pages` (`JamesIves/github-pages-deploy-action@v4`), main only
+
+**Why step 5 exists.** `optimize()` returns 0 even when a page fails to convert — it emits a
+`Franklin Warning` and simply writes no output for that page. A job that checks only the exit
+code will happily deploy a site with a missing page. The assert step therefore fails the run
+if the log contains `Franklin Warning`, if any expected page is missing or empty, or if
+anything repo-internal leaked into `__site/`.
+
+**Why Python is pinned to 3.11 and not latest.** It exists solely for minification. Franklin
+shells out to `css_html_js_minify` and pip-installs it itself when the import fails
+(`Franklin/src/build.jl`), which is why there is no explicit pip step. That package was last
+released in **2018** and its classifiers stop at Python 3.6; 3.12 removed `distutils`. If
+minification ever does break, Franklin does not fail — it warns `Will not minify` and ships a
+larger site — so the assert step greps for that string too, because a plain `@warn` is not a
+`Franklin Warning`.
 
 **Never manually push to `gh-pages`** — it is fully managed by CI.
 
-### GitLab CI (`.gitlab-ci.yml`)
-A parallel configuration for GitLab Pages exists as a fallback. Deploys to `public/` directory.
+> Local builds use `minify=false`; production minifies and **strips attribute quotes**. If you
+> grep the live HTML for `rel="canonical"` you will find nothing — it is served as
+> `rel=canonical`. Match quote-agnostically when checking production.
 
 ---
 
@@ -276,13 +339,16 @@ A parallel configuration for GitLab Pages exists as a fallback. Deploys to `publ
 | File | Purpose |
 |------|---------|
 | `config.md` | Global site metadata, RSS config, global LaTeX macros |
-| `utils.jl` | Custom Franklin extension functions (`hfun_*`, `lx_*`) |
-| `_layout/head.html` | HTML `<head>`: meta tags, CSS/font CDN links |
-| `_layout/header.html` | Site navigation bar markup |
-| `_layout/foot.html` | Page footer markup |
-| `_sass/utilities/_variables.scss` | Design tokens: colors, fonts, breakpoints |
-| `_sass/adjust.scss` | Franklin.jl-specific CSS adjustments |
-| `.github/workflows/Deploy.yml` | CI/CD pipeline definition |
+| `utils.jl` | Custom Franklin extension functions (`hfun_canonical`) |
+| `_layout/head.html` | `<head>`: meta, canonical, Open Graph, JSON-LD; opens `<main>` |
+| `_layout/head_mixin.html` | Stylesheet links — **load order is load-bearing** |
+| `_layout/header.html` | Nav markup, `aria-current` via `{{ispage}}` |
+| `_layout/foot.html` | Closes `<main>`; conditional KaTeX/highlight includes |
+| `_layout/page_foot.html` | The footer Franklin injects into every page |
+| `_sass/utilities/_variables.scss` | Design tokens as CSS custom properties |
+| `_sass/adjust.scss` | **The franklin.css reclaim layer — read this first** |
+| `.github/workflows/Deploy.yml` | CI: builds every branch, deploys `main`, asserts output |
+| `plan.md` | Improvement plan and audit record; what is done and what is not |
 
 ---
 
@@ -294,20 +360,29 @@ Franklin allows custom Julia functions for HTML generation and LaTeX command han
 - **`lx_*(com, _)`** — Custom LaTeX-style commands callable as `\commandname{arg}`
 
 Current functions in `utils.jl`:
-- `hfun_bar(vname)` — Computes `round(sqrt(val), digits=2)` for a given number
-- `hfun_m1fill(vname)` — Reads a page variable from `index.md`
-- `lx_baz(com, _)` — Uppercases brace content (example/template function)
 
-Add new custom functions here when Franklin's built-in syntax is insufficient.
+- `hfun_canonical()` — the current page's absolute URL, in the **directory** form the site's own
+  links use (`/research/`, not `/research/index.html`), with the home page as the bare domain.
+  Used from `_layout/head.html` as `{{canonical}}` for both `rel=canonical` and `og:url`.
+  Derives from Franklin's per-page `fd_url`, which already honours `keep_path` — that is why
+  `404.html` stays `404.html` rather than becoming `/404/`.
+
+Franklin's three template examples (`hfun_bar`, `hfun_m1fill`, `lx_baz`) were removed; none was
+called from any page.
+
+Add new custom functions here when Franklin's built-in syntax is insufficient. A Julia error in
+this file fails the build, so push to a branch first and let CI build it.
 
 ---
 
 ## Git Workflow
 
-- **Feature branches**: develop changes on named branches (e.g., `claude/feature-name`)
+- **Feature branches**: develop changes on named branches (e.g., `claude/feature-name`).
+  Pushing one runs a full build with no deploy — use it, especially for anything touching
+  `utils.jl`, `_layout/`, `config.md` or CI.
 - **Production**: merge to `main` — this triggers the deploy pipeline automatically
 - **`gh-pages`**: auto-generated deploy target; never commit here directly
-- **`master`**: legacy branch, still tracked by CI but `main` is the primary branch
+- There is no `master` branch; the CI trigger for it was removed.
 
 ### Commit and push
 ```bash
@@ -329,7 +404,7 @@ After making changes:
 - [ ] Run a full `optimize()` and inspect `__site/` — `serve()` does **not** pre-render KaTeX,
       so math layout must be checked against an `optimize()` build
 - [ ] Confirm nothing repo-internal leaked into `__site/` (see `ignore` in `config.md`)
-- [ ] Verify locally before merging. **CI builds only on push to `main`/`master`** — there is
-      no pull-request or feature-branch build, so merging to `main` *is* the first real build.
-      (A failed build does not break the live site: the deploy step is separate and only runs
-      on success, so `gh-pages` keeps serving the last good build.)
+- [ ] **Push to a feature branch and let CI build it before merging.** Every branch builds; only
+      `main` deploys. A failed build cannot break the live site — the deploy step is separate and
+      runs only on success, so `gh-pages` keeps serving the last good build.
+- [ ] If you changed `_sass/`, recompile and commit `_css/celeste.min.css` **in the same commit**
