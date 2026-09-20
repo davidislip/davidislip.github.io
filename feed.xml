@@ -23,50 +23,50 @@
 
 <item>
   <title>
-    <![CDATA[  Some Facts about Bootstrapping  ]]>
-  </title>
-  <link> https://davidislip.github.io/blogs/post1/index.html </link>
-  <guid> https://davidislip.github.io/blogs/post1/index.html </guid>
-  <description>
-    <![CDATA[  Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations.  ]]>
-  </description>  
-    
-  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
-  
-  
-  <atom:author>
-    <atom:name>David Islip</atom:name>
-  </atom:author>
-        
-</item>
-
-<item>
-  <title>
-    <![CDATA[  Probability of Constraint Satisfaction and Robust Optimization  ]]>
-  </title>
-  <link> https://davidislip.github.io/blogs/post2/index.html </link>
-  <guid> https://davidislip.github.io/blogs/post2/index.html </guid>
-  <description>
-    <![CDATA[  An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming.  ]]>
-  </description>  
-    
-  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
-  
-  
-  <atom:author>
-    <atom:name>David Islip</atom:name>
-  </atom:author>
-        
-</item>
-
-<item>
-  <title>
     <![CDATA[  Home  ]]>
   </title>
   <link> https://davidislip.github.io/index.html </link>
   <guid> https://davidislip.github.io/index.html </guid>
   <description>
     <![CDATA[  David Islip is a quantitative researcher and Ph.D. graduate from the University of Toronto, specializing in financial optimization, machine learning, and operations research. Currently at Balyasny Asset Management.  ]]>
+  </description>  
+    
+  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>David Islip</atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
+    <![CDATA[  Research  ]]>
+  </title>
+  <link> https://davidislip.github.io/research/index.html </link>
+  <guid> https://davidislip.github.io/research/index.html </guid>
+  <description>
+    <![CDATA[  Published and working papers by David Islip on financial optimization, support vector machines, stochastic programming, and machine learning for portfolio management.  ]]>
+  </description>  
+    
+  <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>David Islip</atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
+    <![CDATA[  Blog  ]]>
+  </title>
+  <link> https://davidislip.github.io/blog/index.html </link>
+  <guid> https://davidislip.github.io/blog/index.html </guid>
+  <description>
+    <![CDATA[  Notes on bootstrapping, the delta method, and robust portfolio optimization by David Islip.  ]]>
   </description>  
     
   <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>  
@@ -99,15 +99,34 @@
 
 <item>
   <title>
-    <![CDATA[  Research  ]]>
+    <![CDATA[  Probability of Constraint Satisfaction and Robust Optimization  ]]>
   </title>
-  <link> https://davidislip.github.io/research/index.html </link>
-  <guid> https://davidislip.github.io/research/index.html </guid>
+  <link> https://davidislip.github.io/blogs/post2/index.html </link>
+  <guid> https://davidislip.github.io/blogs/post2/index.html </guid>
   <description>
-    <![CDATA[  Published and working papers by David Islip on financial optimization, support vector machines, stochastic programming, and machine learning for portfolio management.  ]]>
+    <![CDATA[  An overview of the connection between probability of constraint satisfaction and robust optimization, with applications to chance-constrained programming.  ]]>
   </description>  
     
-  <pubDate>Fri, 22 Mar 2019 00:00:00 +0000</pubDate>  
+  <pubDate>Wed, 29 Jan 2025 00:00:00 +0000</pubDate>  
+  
+  
+  <atom:author>
+    <atom:name>David Islip</atom:name>
+  </atom:author>
+        
+</item>
+
+<item>
+  <title>
+    <![CDATA[  Some Facts about Bootstrapping  ]]>
+  </title>
+  <link> https://davidislip.github.io/blogs/post1/index.html </link>
+  <guid> https://davidislip.github.io/blogs/post1/index.html </guid>
+  <description>
+    <![CDATA[  Asymptotic results on bootstrapping: the mean absolute deviation of normal variables, quantile of absolute deviations from the mean, and the distribution of standard deviations.  ]]>
+  </description>  
+    
+  <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>  
   
   
   <atom:author>
