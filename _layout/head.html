@@ -18,7 +18,12 @@
   <meta property="og:site_name" content="David Islip Quant">
   <meta property="og:description" content="{{fill description}}">
   <meta property="og:url" content="https://davidislip.github.io/">
-  <meta property="og:image" content="https://davidislip.github.io/assets/headshot.jpg">
+  <!-- Dedicated social-card image: the in-page headshot is 600px wide, below the
+       1200px threshold LinkedIn/Facebook need to render a large card. -->
+  <meta property="og:image" content="https://davidislip.github.io/assets/headshot-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1402">
+  <meta property="og:image:alt" content="David Islip">
   {{isdef title}}<meta property="og:title" content="{{fill title}} — David Islip">{{end}}
 
   <!-- Twitter Card -->
