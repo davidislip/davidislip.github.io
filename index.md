@@ -44,7 +44,7 @@
 
 ## About
 
-I am a quantitative researcher on the Macro Risk team at Balyasny Asset Management. My work is in financial optimization — exploiting the structure of particular optimization problem classes, and pairing them with machine-learning methods suited to the problem at hand.
+I am a quantitative researcher on the Macro Risk team at Balyasny Asset Management. I work on financial optimization. I build methods that take advantage of the structure of specific classes of optimization problems, and I combine them with machine learning where it fits the problem.
 
 I completed my Ph.D. in the Department of Mechanical and Industrial Engineering at the University of Toronto, specializing in Operations Research for Financial Applications under the supervision of Professor Roy H. Kwon.
 
