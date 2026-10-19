@@ -1,10 +1,17 @@
 +++
 title = "Blog"
-rss = "Notes on bootstrapping, the delta method, and robust portfolio optimization by David Islip."
-description = "Notes on bootstrapping, the delta method, and robust portfolio optimization by David Islip."
+rss = "Notes on combinatorial market making, bootstrapping, the delta method, and robust portfolio optimization by David Islip."
+description = "Notes on combinatorial market making, bootstrapping, the delta method, and robust portfolio optimization by David Islip."
 +++
 
 # Blog
+
+## Frank–Wolfe Market Making: Notes
+*19 October 2026*
+
+Tutorial notes on combinatorial market making, from trade costs and coherent prices to Bregman projections and Frank–Wolfe as column generation. The full PDF includes a worked triangle market example, a Python program, and a discussion of profit certificates from time-limited integer solves.
+
+[Read "Frank–Wolfe Market Making: Notes"](/blogs/post3/) · [Download the notes (PDF)](/assets/pdfs/frank-wolfe-market-making-notes.pdf)
 
 ## Some Facts about Bootstrapping
 *28 January 2025*

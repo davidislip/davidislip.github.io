@@ -92,6 +92,7 @@ jobs:
         missing=0
         for f in index.html research/index.html presentations/index.html \
                  blog/index.html blogs/post1/index.html blogs/post2/index.html \
+                 blogs/post3/index.html assets/pdfs/frank-wolfe-market-making-notes.pdf \
                  404.html feed.xml sitemap.xml robots.txt \
                  google599763433934e4da.html; do
           if [ ! -s "__site/$f" ]; then
