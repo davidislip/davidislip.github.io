@@ -1,7 +1,7 @@
 +++
 title = "Research"
-rss = "Published and working papers by David Islip on financial optimization, support vector machines, stochastic programming, and machine learning for portfolio management."
-description = "Published and working papers by David Islip on financial optimization, support vector machines, stochastic programming, and machine learning for portfolio management."
+rss = "Published and accepted papers by David Islip on financial optimization, support vector machines, stochastic programming, and machine learning for portfolio management."
+description = "Published and accepted papers by David Islip on financial optimization, support vector machines, stochastic programming, and machine learning for portfolio management."
 +++
 
 # Papers
@@ -16,9 +16,9 @@ description = "Published and working papers by David Islip on financial optimiza
 -\biblabel{islip20}{Islip et al. (2021)} **Islip**, **Wei**, and **Kwon**, [Managing construction risk with weather derivatives](https://doi.org/10.1080/0013791X.2020.1733721), *The Engineering Economist*, **66**(2), 150–184, 2021.
 
 
-## Submitted
+## Accepted
 
--\biblabel{islip25b}{Islip et al. (2025)} **Islip**, **Kwon**, **Bae**, and **Kim**, [Contextual Scenario Generation for Two-Stage Stochastic Programming](https://www.arxiv.org/abs/2502.05349), *Computational Optimization and Applications* (major revision), 2025.
+-\biblabel{islip25b}{Islip et al. (2026)} **Islip**, **Kwon**, **Bae**, and **Kim**, [Contextual Scenario Generation for Two-Stage Stochastic Programming](https://www.arxiv.org/abs/2502.05349), *Computational Optimization and Applications* (accepted for publication), 2026.
 
 ## Thesis
 
